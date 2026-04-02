@@ -79,7 +79,7 @@ export function ProductFilter() {
                 <button
                   key={color.id}
                   onClick={() => handleFilter("color", color.id)}
-                  className={`h-7 w-7 rounded-full border border-white/20 transition-all ${
+                  className={`h-7 w-7 rounded-full border border-white/20 cursor-pointer transition-all ${
                     isActive ? "ring-2 ring-white ring-offset-2 ring-offset-[#B4AFA7]" : "hover:ring-2 hover:ring-white/50 hover:ring-offset-2 hover:ring-offset-[#B4AFA7]"
                   }`}
                   style={{ backgroundColor: color.hex }}
@@ -101,7 +101,7 @@ export function ProductFilter() {
                 <button
                   key={size}
                   onClick={() => handleFilter("talla", size)}
-                  className={`flex h-10 items-center justify-center rounded border text-[10px] transition-colors ${
+                  className={`flex h-10 items-center justify-center rounded border text-[10px] cursor-pointer transition-colors ${
                     isActive
                       ? "border-white/40 bg-white text-[#B4AFA7] font-bold"
                       : "border-white/10 bg-white/5 font-medium hover:bg-white/10"

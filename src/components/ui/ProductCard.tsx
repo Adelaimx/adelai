@@ -60,11 +60,11 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
     : "w-full h-full flex flex-col";
 
   return (
-    <div className={`group cursor-pointer block ${containerClasses}`}>
+    <div className={`group cursor-default block ${containerClasses}`}>
       {/* Product Image Carousel */}
       <div className="relative aspect-[3/4] overflow-hidden bg-background-light mb-4 flex items-center justify-center p-0">
         {/* Images */}
-        <Link href={`/producto/${product.id}`} className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
           {images.length > 0 && (
             <Image
               src={images[currentImageIndex]}
@@ -75,21 +75,21 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           )}
-        </Link>
+        </div>
 
         {/* Navigation Arrows (Visible on Hover if more than 1 image) */}
         {images.length > 1 && (
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
               aria-label="Imagen anterior"
             >
               <span className="material-symbols-outlined text-sm">chevron_left</span>
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
               aria-label="Siguiente imagen"
             >
               <span className="material-symbols-outlined text-sm">chevron_right</span>
@@ -111,14 +111,14 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
         
         {/* Bottom Actions Overlay */}
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end gap-2 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none">
-          <Link href={`/producto/${product.id}`} className="w-full pointer-events-auto">
-            <button className="w-full translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:bg-primary hover:text-white">
+          <Link href={`/producto/${product.id}`} className="w-full pointer-events-auto cursor-pointer">
+            <button className="w-full translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:bg-primary hover:text-white cursor-pointer">
               VER PRODUCTO
             </button>
           </Link>
           <button 
             onClick={handleAddToCart}
-            className="w-full pointer-events-auto translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl"
+            className="w-full pointer-events-auto translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl cursor-pointer"
           >
             {forceAddMode}
           </button>
@@ -129,9 +129,7 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
       {/* Product Info */}
       <div className="flex flex-col flex-1">
         <h3 className="text-sm font-medium tracking-wide mb-1">
-          <Link href={`/producto/${product.id}`} className="hover:text-primary transition-colors">
-            {product.name}
-          </Link>
+          {product.name}
         </h3>
         <p className="text-sm font-bold text-primary">${currentPrice.toFixed(2)}</p>
         
@@ -144,7 +142,7 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
                   key={variant.id}
                   onClick={(e) => handleVariantChange(e, idx)}
                   style={{ backgroundColor: variant.colorHex }}
-                  className={`w-4 h-4 rounded-full transition-transform hover:scale-110 ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
+                  className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
                   aria-label={`Color ${variant.colorName}`}
                   title={variant.colorName}
                 />
