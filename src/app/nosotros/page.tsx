@@ -105,7 +105,7 @@ export default function NosotrosPage() {
             
             <div className="pt-6">
               <button 
-                className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all tracking-widest uppercase text-sm" 
+                className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all tracking-widest uppercase text-sm cursor-pointer" 
                 type="button"
               >
                 Enviar Mensaje

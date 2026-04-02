@@ -2,6 +2,7 @@ import { ProductFilter } from "@/components/ui/ProductFilter";
 import { ProductGrid } from "@/components/ui/ProductGrid";
 import { PRODUCTS } from "@/lib/mockProducts";
 import Image from "next/image";
+import { ExcellenceSection } from "@/components/ui/ExcellenceSection";
 
 export default async function CategoryPage({ params }: { params: Promise<{ nombre: string }> }) {
   const { nombre } = await params;
@@ -39,13 +40,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ nombr
         <ProductGrid products={products} />
       </div>
 
-      {/* Collection Summary Section */}
-      <div className="w-full py-16 bg-white dark:bg-background-dark border-t border-primary/5 z-10">
-        <div className="mx-auto max-w-7xl px-10 flex flex-col items-center justify-center text-center">
-          <div className="h-px w-20 bg-primary/30 mb-8"></div>
-          <p className="text-[12px] font-bold uppercase tracking-[0.6em] text-primary/60">ARTESANÍA DE EXCELENCIA</p>
-        </div>
-      </div>
+      {/* Excellence Section */}
+      <ExcellenceSection />
     </div>
   );
 }
