@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9d8e80",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#1a1918",
+                        "sidebar-neutral": "#B4AFA7",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom range styling from SCREEN_74 */
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            margin-top: -5px;
+        }
+        input[type='range']::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<!-- Top Navbar -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/20 bg-background-light/80 backdrop-blur-md dark:bg-background-dark/80">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-2xl font-extrabold tracking-tighter text-slate-900 dark:text-slate-100 uppercase">ADELAI</h2>
+</div>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#">Colecciones</a>
+<a class="text-sm font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#">Joyas</a>
+<a class="text-sm font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#">Nosotros</a>
+<a class="text-sm font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#">Contacto</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+<input class="h-10 w-64 rounded-full border-none bg-primary/10 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/50 dark:bg-primary/20" placeholder="Buscar..." type="text"/>
+</div>
+<button class="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-slate-900 transition-all hover:bg-primary/20 dark:bg-primary/20 dark:text-slate-100">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</span>
+</button>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-[35rem] w-full overflow-hidden bg-slate-200">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Fotografía editorial de joyas de lujo en primer plano" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_Abda0HehFpEpX1w6fD1FiKYI5vIott_94hn9__hN4NQKrvFSnqayTm0jBFgfUldPdimwBTJiKPzqf90buSo7tOgPUSgBkv4aWXBWOQnaK1jDuKv_q1B9Mk3DYMgh1yU9ECKiyjziW7h1-El9-s8tuRRv5NWVvlC8p7MgQVu3JXfk8D5PCdr3H3B50evuTgGB5C92mEuf2HLgMsnYSMmU6HPLgi7iRAySQPDJwjiWpMypD99uhFlBC27xUqPzG1gz8I11C_yIC9U');">
+</div>
+<div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+<h1 class="font-serif text-6xl font-light tracking-[0.2em] text-white md:text-8xl">BEST SELLERS</h1>
+</div>
+</section>
+<div class="mx-auto max-w-7xl px-0 py-0">
+<div class="flex flex-col lg:flex-row items-stretch">
+<!-- Sidebar Filters: Matched to SCREEN_74 style -->
+<aside class="hidden w-72 flex-shrink-0 bg-[#B4AFA7] px-8 py-12 text-white/90 lg:block">
+<div class="flex items-center justify-between mb-12">
+<h2 class="text-xs font-bold uppercase tracking-widest text-white">FILTROS</h2>
+<button class="text-[10px] uppercase tracking-widest text-white/60 hover:text-white transition-colors">LIMPIAR</button>
+</div>
+<div class="space-y-12">
+<!-- Price Filter -->
+<div>
+<h3 class="mb-6 text-[11px] font-bold uppercase tracking-widest text-white">PRECIO</h3>
+<div class="px-1">
+<input class="w-full accent-white appearance-none bg-transparent" max="5000" min="0" step="100" type="range"/>
+<div class="mt-4 flex justify-between text-[10px] font-medium tracking-tight text-white/70">
+<span>$0 MXN</span>
+<span>$5,000+ MXN</span>
+</div>
+</div>
+</div>
+<!-- Color Filter -->
+<div>
+<h3 class="mb-6 text-[11px] font-bold uppercase tracking-widest text-white">COLOR</h3>
+<div class="flex flex-wrap gap-3 px-1">
+<button class="h-7 w-7 rounded-full border border-white/20 bg-[#F3E5D8] ring-2 ring-offset-2 ring-offset-[#B4AFA7] ring-transparent hover:ring-white transition-all" title="Oro"></button>
+<button class="h-7 w-7 rounded-full border border-white/20 bg-[#D4AF37] ring-2 ring-offset-2 ring-offset-[#B4AFA7] ring-transparent hover:ring-white transition-all" title="Dorado"></button>
+<button class="h-7 w-7 rounded-full border border-white/20 bg-[#C0C0C0] ring-2 ring-offset-2 ring-offset-[#B4AFA7] ring-transparent hover:ring-white transition-all" title="Plata"></button>
+<button class="h-7 w-7 rounded-full border border-white/20 bg-[#FFFFFF] ring-2 ring-offset-2 ring-offset-[#B4AFA7] ring-transparent hover:ring-white transition-all" title="Blanco"></button>
+</div>
+</div>
+<!-- Size Filter (Talla) -->
+<div>
+<h3 class="mb-6 text-[11px] font-bold uppercase tracking-widest text-white">TALLA</h3>
+<div class="grid grid-cols-4 gap-2">
+<button class="flex h-10 items-center justify-center rounded border border-white/10 bg-white/5 text-[10px] font-medium hover:bg-white/10 transition-colors">S</button>
+<button class="flex h-10 items-center justify-center rounded border border-white/40 bg-white text-[#B4AFA7] text-[10px] font-bold">M</button>
+<button class="flex h-10 items-center justify-center rounded border border-white/10 bg-white/5 text-[10px] font-medium hover:bg-white/10 transition-colors">L</button>
+<button class="flex h-10 items-center justify-center rounded border border-white/10 bg-white/5 text-[10px] font-medium hover:bg-white/10 transition-colors">XL</button>
+<button class="flex h-10 items-center justify-center rounded border border-white/10 bg-white/5 text-[10px] font-medium hover:bg-white/10 transition-colors">U</button>
+</div>
+</div>
+<!-- Material Section -->
+<div>
+<h3 class="mb-6 text-[11px] font-bold uppercase tracking-widest text-white">MATERIAL</h3>
+<div class="space-y-3 px-1">
+<label class="flex items-center gap-3 text-[11px] cursor-pointer group">
+<div class="w-4 h-4 border border-white/30 rounded-sm flex items-center justify-center group-hover:border-white transition-colors"></div>
+<span class="text-white/70 group-hover:text-white transition-colors">Oro 18k</span>
+</label>
+<label class="flex items-center gap-3 text-[11px] cursor-pointer group">
+<div class="w-4 h-4 border border-white/30 rounded-sm flex items-center justify-center group-hover:border-white transition-colors"></div>
+<span class="text-white/70 group-hover:text-white transition-colors">Plata Esterlina</span>
+</label>
+<label class="flex items-center gap-3 text-[11px] cursor-pointer group">
+<div class="w-4 h-4 border border-white/30 rounded-sm flex items-center justify-center group-hover:border-white transition-colors"></div>
+<span class="text-white/70 group-hover:text-white transition-colors">Piedras Preciosas</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<div class="flex-1 px-6 py-12 lg:px-12">
+<div class="mb-10 flex flex-wrap items-center justify-end gap-4">
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDENAR POR:</span>
+<select class="border-none bg-transparent py-0 pr-8 text-[11px] font-bold uppercase tracking-widest text-slate-900 focus:ring-0 dark:text-white">
+<option>Más Recientes</option>
+<option>Precio: Menor a Mayor</option>
+<option>Precio: Mayor a Menor</option>
+<option>Recomendados</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+<!-- Product Card 1 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Collar Atenea" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqNWyOt0egQGWJWkv6PCaEQqH3LLlkgSGNtQYOsMxII1uWuKFDIkY4zhTt-2K3s9daMBStUaapM0kOyJ3WrfFnBWt7O488PEVVfubb1sdlRdpD7cHVTBP-rp0mg2OILPXNnMO6pN3n_3BwMR4e-pW43oJyeGudVfuFNccxsfcprnhgs3jqvt2XsfT-ki7cj5mjZDCW6OCTCaqr64133vEVIH6MxLam9yraH-mvN_zQtcM-dSZqqKRGa4Q72617V0OluGJtddrUC7o"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Collar Atenea</h3>
+<span class="text-[10px] font-medium text-slate-500">120,00€</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Anillo Hera" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1desE0WVil3rOGQ_oVAys0BZOSXWv239zfsOd2gldG2m3OXdSW28q3gx3sQhSU3hJZwVMnkRIWfS62OME5jRcI5lO_f6KRWygihaGUE7ivrmzMpenAHNs9Yjzb7SIc5x8-3ej-O6CIE2ibn6J2S-Wwy5cbMH7Rwygy3emhg4fjXdOg7lwlniT5ryYd71mbOKWOeYlSQs1xvmHNOFopMhpEuJRPD8XA1W2c012yE0W-g02RUPN9slOWB3nhuHygVI_p64oU88QZk8"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Anillo Hera</h3>
+<span class="text-[10px] font-medium text-slate-500">85,00€</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Pendientes Selene" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQbFnAEvba5YfRctK9_ofdy-hlELyK4KdgJ8ZIjoKnKf4VQj5XzvMg3PogsR6wl6fo1Sx985X0TjKjF05ZiLO9LPya0LRSWo_4oeyRePexho3nJHRBZPNmGW6T8n0iAedI9ZGAJNSShFdAs3Hs0enV1diFXrBpFV8-0uHEZzD-6j8ZA7Xrwzktqw9M09OjAhCwXbrAjuoxdeqFxKToJTVq9T3em3vP3AjJZwjhLZDt6hoP4IudBOYCtm2orwdmqi4B4vlUid80u1I"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Pendientes Selene</h3>
+<span class="text-[10px] font-medium text-slate-500">65,00€</span>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Brazalete Artemisa" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPUw5dDQXuMVzp5nLq4-BT2OwwYDpoVEbZKCdsogal44RtL_dwNVA1e5gg5Rw2UWkInSiqdlFF9zcLkJc3psVRvrde6wizMVoMDkUGUs8Z9nrIIyBLcg4yII0BTCX56W_B4Fi5CW9Di0d9kuvIlUyQrz1pWktj7r5kaF0dLjl9Ub7uEFm3F4Eo8s8i8KREWdCopmbyn510AEm7h82vyTQQU_QNpC2GhJUN508a6w7R7R6JVvP2_4atEbjclVRNQWxZI5OOdwVH4BY"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Brazalete Artemisa</h3>
+<span class="text-[10px] font-medium text-slate-500">150,00€</span>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Anillo Afrodita" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5YE_TjLJMVb818uV5rA2BF7kUqbh_7WB9xfrEJ8WxBa5dhz6xuCQSBXHQPKUgRi0UR_vIiDC6IPSaPFLz6kOq5eVhvcXBF-Je9Vbp7KPD17-GmZBfUiQwoqUVOqgnDhcaeqbv0LiOvvmweKnmeSOwcMmiEF9Q-hb991JsvOxe9usXlNaSPpVzXEu7Sa9yfwvUPqX6T_cSerhaIDe3Tj85iF-SmUvX_mVxtIBb_WdPvv3KF86ujyNg8G5x-8CvYPGXzwjI18j8whA"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Anillo Afrodita</h3>
+<span class="text-[10px] font-medium text-slate-500">210,00€</span>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group flex flex-col">
+<div class="relative mb-4 aspect-[4/5] overflow-hidden rounded-sm bg-primary/5">
+<img alt="Collar Zeus" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwWqOk6l9BFDT86PkDwG6uCvyQ0f8rkt5xFvSAdjbPNYhv06y2BJBi5zBUXdOFUj8QFJTZea0q-Nc7_AHa9GtAUJ76YrRBSY-bx2i2zkNkLXge0iuojPq0_ECwTvvd1pOQl8BYVuMLD0OUfZ69aYcdP4kJ-s3M2zKD85BoLTVmhOecy3AZ26t-Us6Y6RnY0_zeoObwAz8Ti3AxkHBBe6wdij97BXTBnGywhMur0hGJxDA1JvXpWeTDpj2Svd-d8qIjmLJTf8Kdcdc"/>
+<button class="absolute bottom-4 left-4 right-4 translate-y-4 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 hover:bg-primary hover:text-white">
+                                    Vista rápida
+                                </button>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-center">
+<h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Collar Zeus</h3>
+<span class="text-[10px] font-medium text-slate-500">195,00€</span>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-20 flex items-center justify-center gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-400 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-sm bg-sidebar-neutral text-white text-[11px] font-bold">1</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-500 text-[11px] font-bold hover:bg-slate-50 transition-colors">2</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-500 text-[11px] font-bold hover:bg-slate-50 transition-colors">3</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-400 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Excellence Section -->
+<section class="border-t border-primary/10 py-24 bg-background-light dark:bg-background-dark">
+<div class="mx-auto max-w-4xl text-center px-6">
+<span class="text-xs font-bold uppercase tracking-[0.3em] text-primary">ADELAI Heritage</span>
+<h2 class="mt-6 font-serif text-4xl font-light italic tracking-tight text-slate-900 dark:text-slate-100 md:text-5xl">ARTESANÍA DE EXCELENCIA</h2>
+<div class="mx-auto mt-8 h-px w-24 bg-primary"></div>
+<p class="mt-8 text-sm leading-relaxed tracking-wide text-slate-500 max-w-2xl mx-auto uppercase">
+                    Cada pieza es cuidadosamente elaborada a mano por maestros joyeros, combinando técnicas tradicionales con el diseño contemporáneo más vanguardista.
+                </p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-dark py-16 text-slate-300">
+<div class="mx-auto max-w-7xl px-6">
+<div class="grid grid-cols-1 gap-12 md:grid-cols-4">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-2 text-white">
+<svg class="size-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+<h2 class="text-xl font-extrabold tracking-tighter uppercase">ADELAI</h2>
+</div>
+<p class="text-sm font-light leading-relaxed">Alta joyería diseñada para perdurar. Elegancia, calidad y exclusividad en cada detalle.</p>
+</div>
+<div>
+<h4 class="mb-6 text-xs font-bold uppercase tracking-widest text-white">Tienda</h4>
+<ul class="flex flex-col gap-4 text-sm font-light">
+<li><a class="hover:text-primary transition-colors" href="#">Best Sellers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Collares</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Anillos</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Pendientes</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-6 text-xs font-bold uppercase tracking-widest text-white">Ayuda</h4>
+<ul class="flex flex-col gap-4 text-sm font-light">
+<li><a class="hover:text-primary transition-colors" href="#">Envíos y Devoluciones</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Guía de Tallas</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cuidado de Joyas</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contacto</a></li>
+</ul>
+</div>
+<div>
+<h4 class="mb-6 text-xs font-bold uppercase tracking-widest text-white">Suscríbete</h4>
+<p class="mb-4 text-sm font-light">Recibe noticias sobre nuevas colecciones y eventos.</p>
+<div class="flex gap-2">
+<input class="w-full rounded-sm border-none bg-white/10 px-4 py-2 text-sm focus:ring-1 focus:ring-primary" placeholder="Email" type="email"/>
+<button class="rounded-sm bg-primary px-4 py-2 text-slate-900 transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-16 border-t border-white/10 pt-8 text-center text-[10px] font-bold uppercase tracking-widest">
+<p>© 2024 ADELAI Jewelry. Todos los derechos reservados.</p>
+</div>
+</div>
+</footer>
+</body></html>
