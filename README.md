@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ADELAI - Joyería Contemporánea
 
-## Getting Started
+![ADELAI Banner](https://lh3.googleusercontent.com/aida-public/AB6AXuCToxH35ucCQhFBR_r_PVV4aM-nURecRbVk4ZUm_JB4NiuQVinUKPs49dhFR1TnuSCvL8WTuD05yW7NNqb7vGc-3NLTnJiRnGHUMLTkVO5RBq2lsYzpRr9gZlKntYeFbBfwJZEPo6e1iixjChM_pHc6xm8riwW5pfSf3_ECxymmYLXLkM_9V5J3RJy4ZSiACUQ4fFT9otH5rPoKRjcNsn9Ad64Rq4s4ssnpKHAOjfyylEAJ3L9MJWsHiN6uQ0CPrWMoIaOWzEqqrMg)
 
-First, run the development server:
+Bienvenido al repositorio oficial de **ADELAI**, una plataforma de e-commerce premium diseñada para ofrecer una experiencia de compra de joyería minimalista y sofisticada.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 💎 Sobre el Proyecto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ADELAI es una marca enfocada en la calidad y el diseño consciente. Nuestras piezas están fabricadas en acero inoxidable de alto grado con baño de oro de 18k, garantizando durabilidad y estilo.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Características Principales:
+- **Resistente al Agua:** Joyería diseñada para el día a día sin perder su brillo.
+- **Acero Inoxidable & Oro 18k:** Materiales hipoalergénicos de alta calidad.
+- **Diseño Responsivo:** Experiencia optimizada para móviles, tablets y escritorio.
+- **Modo Oscuro Dinámico:** Interfaz elegante que se adapta a las preferencias del usuario.
+- **Navegación por Categorías:** Acceso rápido a Anillos, Aretes, Collares y Pulseras.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🚀 Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+Este proyecto utiliza las últimas tecnologías del ecosistema web para garantizar rendimiento y escalabilidad:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework:** [Next.js 15+](https://nextjs.org/) (App Router)
+- **Biblioteca UI:** [React 19](https://react.dev/)
+- **Estilos:** [Tailwind CSS 4](https://tailwindcss.com/)
+- **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
+- **Iconos:** Google Material Symbols
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Configuración y Desarrollo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Sigue estos pasos para ejecutar el proyecto localmente:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/adelaimx/adelai.git
+   cd adelai
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Iniciar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Ver el proyecto:**
+   Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+---
+
+## 📂 Estructura del Proyecto
+
+- `src/app/`: Rutas, layouts y páginas principales.
+- `src/components/`: Componentes reutilizables de la interfaz (UI).
+- `src/lib/`: Utilidades, helpers y datos mock.
+- `src/types/`: Definiciones de tipos de TypeScript.
+- `public/`: Activos estáticos como imágenes y fuentes.
+
+---
+
+## 📝 Notas de Versión
+
+- **v0.1.0:** Lanzamiento inicial con Home, Categorías y Checkout básico.
+- **UI Premium:** Implementación de carruseles de productos y estética "glassmorphism".
+
+---
+
+Desarrollado con ❤️ por el equipo de ADELAI.
+
