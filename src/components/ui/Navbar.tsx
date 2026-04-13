@@ -38,13 +38,13 @@ export function Navbar() {
         {/* Left Section */}
         <div className="flex-1 flex gap-8 items-center">
           {/* Mobile Menu Button */}
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-            className="p-2 hover:bg-primary/10 transition-colors lg:hidden rounded-full"
-            aria-label="Abrir menú"
-          >
-            <span className="material-symbols-outlined text-slate-900 dark:text-slate-100">menu</span>
-          </button>
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              className="p-2 hover:bg-primary/10 transition-colors lg:hidden rounded-full"
+              aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            >
+              <span className="material-symbols-outlined text-slate-900 dark:text-slate-100">{isMobileMenuOpen ? "close" : "menu"}</span>
+            </button>
           
           <nav className="hidden lg:flex items-center gap-6">
             <Link className={getLinkClasses("/")} href="/">inicio</Link>
@@ -68,7 +68,11 @@ export function Navbar() {
             <Link className={getLinkClasses("/categoria/anillos")} href="/categoria/anillos">anillos</Link>
             <Link className={getLinkClasses("/best-sellers", true)} href="/best-sellers">BEST SELLERS</Link>
           </nav>
-          <button onClick={() => setIsCartOpen(true)} className="p-2 hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center relative">
+          <button 
+            onClick={() => setIsCartOpen(true)} 
+            className="p-2 hover:bg-primary/10 rounded-full transition-colors flex items-center justify-center relative"
+            aria-label={`Ver carrito, ${cartCount} productos`}
+          >
             <span className="material-symbols-outlined text-slate-900 dark:text-slate-100">shopping_bag</span>
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center">

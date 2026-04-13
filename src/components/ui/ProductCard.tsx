@@ -119,6 +119,7 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           <button 
             onClick={handleAddToCart}
             className="w-full pointer-events-auto translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl cursor-pointer"
+            aria-label={`Añadir ${product.name} al carrito`}
           >
             {forceAddMode}
           </button>
@@ -138,14 +139,15 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           {product.variants.length > 0 && (
             <div className="flex gap-2">
               {product.variants.map((variant, idx) => (
-                <button 
-                  key={variant.id}
-                  onClick={(e) => handleVariantChange(e, idx)}
-                  style={{ backgroundColor: variant.colorHex }}
-                  className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
-                  aria-label={`Color ${variant.colorName}`}
-                  title={variant.colorName}
-                />
+                  <button 
+                    key={variant.id}
+                    onClick={(e) => handleVariantChange(e, idx)}
+                    style={{ backgroundColor: variant.colorHex }}
+                    className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
+                    aria-label={`Seleccionar color ${variant.colorName} para ${product.name}`}
+                    title={variant.colorName}
+                  />
+                    
               ))}
             </div>
           )}

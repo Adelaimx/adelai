@@ -45,9 +45,9 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
   };
 
   return (
-    <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 md:px-10 py-8 mt-16">
+    <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 md:px-10 py-8 mt-20 sm:mt-24 lg:mt-16">
       {/* Breadcrumbs */}
-      <nav className="flex flex-wrap gap-2 pb-6 items-center text-sm">
+      <nav className="flex flex-wrap gap-2 pb-6 pt-2 items-center text-sm">
         <Link className="text-primary font-medium hover:underline" href="/">Inicio</Link>
         <span className="text-slate-400 material-symbols-outlined text-xs">chevron_right</span>
         <Link className="text-primary font-medium hover:underline" href="/categoria/collares">Collares</Link>
@@ -116,7 +116,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
         <div className="flex flex-col gap-6">
           <div className="space-y-2">
             <span className="bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest px-2 py-1 rounded">Edición Limitada</span>
-            <h1 className="text-slate-900 dark:text-slate-100 text-4xl font-black leading-tight tracking-tight">{product.name}</h1>
+            <h1 className="text-slate-900 dark:text-slate-100 text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-tight">{product.name}</h1>
             <div className="flex items-center gap-4">
               <p className="text-2xl font-bold text-primary">${currentPrice.toFixed(2)} MXN</p>
               <span className="text-slate-400 line-through text-lg">${originalPrice.toFixed(2)} MXN</span>
@@ -208,7 +208,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
           <div className="space-y-4 pt-4">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center md:items-stretch md:justify-start">
               {/* Quantity Button */}
-              <div className="flex justify-between items-center border border-primary/30 rounded px-2 bg-white dark:bg-slate-900 h-14 md:h-12 w-48 md:w-auto shrink-0 transition-colors hover:border-primary">
+              <div className="flex justify-between items-center border border-primary/30 rounded px-2 bg-white dark:bg-slate-900 h-14 md:h-12 w-full max-w-[200px] md:w-auto shrink-0 transition-colors hover:border-primary">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 text-primary hover:bg-primary/10 rounded-full h-10 w-10 flex items-center justify-center font-medium">-</button>
                 <input className="w-12 text-center border-none focus:ring-0 bg-transparent font-bold text-slate-900 dark:text-slate-100 p-0" readOnly type="number" value={quantity} />
                 <button onClick={() => setQuantity(quantity + 1)} className="px-4 text-primary hover:bg-primary/10 rounded-full h-10 w-10 flex items-center justify-center font-medium">+</button>
@@ -217,7 +217,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
               {/* Add to Cart Button */}
               <button 
                 onClick={handleAddToCart} 
-                className="w-[85%] md:w-auto md:flex-1 bg-primary text-white font-bold h-14 md:h-12 rounded-[12px] md:rounded-lg hover:bg-slate-900 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                className="w-full md:w-auto md:flex-1 bg-primary text-white font-bold h-14 md:h-12 rounded-[12px] md:rounded-lg hover:bg-slate-900 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
               >
                 <span className="material-symbols-outlined">shopping_bag</span>
                 Añadir al carrito
@@ -247,7 +247,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
 
       {/* Tabs/Details Bottom */}
       <div className="mt-16 border-t border-primary/10 pt-10">
-        <div className="flex gap-8 border-b border-primary/10 mb-8 overflow-x-auto pb-1">
+        <div className="flex gap-4 sm:gap-8 border-b border-primary/10 mb-8 overflow-x-auto pb-1 justify-center sm:justify-start no-scrollbar">
           <button 
             onClick={() => setActiveTab("specs")} 
             className={`pb-4 border-b-2 whitespace-nowrap ${activeTab === "specs" ? 'border-primary text-primary font-bold' : 'border-transparent text-slate-400 font-medium hover:text-slate-600 transition-colors'}`}
@@ -263,17 +263,17 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
         </div>
         
         {activeTab === "specs" ? (
-          <div className="grid md:grid-cols-2 gap-10 p-8 rounded-xl bg-white dark:bg-slate-800 border border-primary/10">
+          <div className="grid md:grid-cols-2 gap-10 p-4 sm:p-6 md:p-8 rounded-xl bg-white dark:bg-slate-800 border border-primary/10">
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">Detalles Técnicos</h3>
               <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                <li className="flex justify-between border-b border-primary/10 pb-2"><span className="font-medium">Material Base</span><span>Acero Inoxidable 316L</span></li>
-                <li className="flex justify-between border-b border-primary/10 pb-2"><span className="font-medium">Acabado</span><span>PVD {activeVariant.colorName}</span></li>
-                <li className="flex justify-between border-b border-primary/10 pb-2"><span className="font-medium">Largo</span><span>40cm + 5cm de extensión</span></li>
-                <li className="flex justify-between border-b border-primary/10 pb-2"><span className="font-medium">Peso</span><span>12.5 gramos</span></li>
+                <li className="flex flex-col sm:flex-row sm:justify-between border-b border-primary/10 pb-2 gap-1 sm:gap-0 items-center sm:items-start text-center sm:text-left"><span className="font-medium text-[10px] uppercase tracking-widest text-slate-400">Material Base</span><span className="font-bold">Acero Inoxidable 316L</span></li>
+                <li className="flex flex-col sm:flex-row sm:justify-between border-b border-primary/10 pb-2 gap-1 sm:gap-0 items-center sm:items-start text-center sm:text-left"><span className="font-medium text-[10px] uppercase tracking-widest text-slate-400">Acabado</span><span className="font-bold">PVD {activeVariant.colorName}</span></li>
+                <li className="flex flex-col sm:flex-row sm:justify-between border-b border-primary/10 pb-2 gap-1 sm:gap-0 items-center sm:items-start text-center sm:text-left"><span className="font-medium text-[10px] uppercase tracking-widest text-slate-400">Largo</span><span className="font-bold">40cm + 5cm de extensión</span></li>
+                <li className="flex flex-col sm:flex-row sm:justify-between border-b border-primary/10 pb-2 gap-1 sm:gap-0 items-center sm:items-start text-center sm:text-left"><span className="font-medium text-[10px] uppercase tracking-widest text-slate-400">Peso</span><span className="font-bold">12.5 gramos</span></li>
               </ul>
             </div>
-            <div className="p-6 rounded-xl border text-white border-white/30" style={{ backgroundColor: "#9E8E80" }}>
+            <div className="p-4 sm:p-6 rounded-xl border text-white border-white/30" style={{ backgroundColor: "#9E8E80" }}>
               <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-white">
                 <span className="material-symbols-outlined">info</span>
                 Información de Calidad
@@ -281,7 +281,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
               <p className="text-sm text-white/90 leading-relaxed mb-4">
                 Nuestras piezas waterproof están fabricadas con tecnología de recubrimiento PVD (Physical Vapor Deposition), lo que las hace hasta 10 veces más resistentes que el chapado convencional.
               </p>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-2 sm:gap-4 justify-center sm:justify-start">
                 <span className="text-[10px] font-bold text-white border border-white/40 px-2 py-1 rounded">SIN PLOMO</span>
                 <span className="text-[10px] font-bold text-white border border-white/40 px-2 py-1 rounded">REUTILIZABLE</span>
                 <span className="text-[10px] font-bold text-white border border-white/40 px-2 py-1 rounded">ÉMISIONES BAJAS</span>
@@ -289,7 +289,7 @@ export function ProductDetailsClient({ product }: ProductDetailsClientProps) {
             </div>
           </div>
         ) : (
-          <div className="p-8 rounded-xl bg-white dark:bg-slate-800 border border-primary/10 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          <div className="p-4 sm:p-8 rounded-xl bg-white dark:bg-slate-800 border border-primary/10 text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-center sm:text-left">
             Nuestras joyas están diseñadas para durar, pero un cuidado adecuado ayudará a mantener su brillo original por más tiempo. Evite el contacto directo con perfumes, cremas corporales y productos de limpieza. Recomendamos guardar su joya en su empaque original cuando no esté en uso.
           </div>
         )}
