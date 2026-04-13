@@ -17,18 +17,20 @@ export default function Home() {
           <Image
             fill
             className="object-cover"
-            alt="Hero jewelry image 1"
+            alt="Colección ADELAI Joyería Minimalista - Modelo elegante con collar"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCToxH35ucCQhFBR_r_PVV4aM-nURecRbVk4ZUm_JB4NiuQVinUKPs49dhFR1TnuSCvL8WTuD05yW7NNqb7vGc-3NLTnJiRnGHUMLTkVO5RBq2lsYzpRr9gZlKntYeFbBfwJZEPo6e1iixjChM_pHc6xm8riwW5pfSf3_ECxymmYLXLkM_9V5J3RJy4ZSiACUQ4fFT9otH5rPoKRjcNsn9Ad64Rq4s4ssnpKHAOjfyylEAJ3L9MJWsHiN6uQ0CPrWMoIaOWzEqqrMg"
             priority
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
         <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-hidden relative">
           <Image
             fill
             className="object-cover"
-            alt="Hero jewelry image 2"
+            alt="Detalle de Joyería ADELAI - Pendientes de oro en primer plano"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1_lj_a6B6k-Jg32qXpsslhM46PNKs4A68vrQKyi9b8aQDfqtZtTfX_h3uaEuZhq4ghJ1apum2ZwFbEKFLtZOPedpvypnQLwCKIh6Z4XJB203XAXeFAMBD2RGeF4IJdvG9njtAUjlMnlyW13FJ9rJU_-UrjCptFoi4E3nO_Kf_sGi0A-gMeaoGrSaxy4z7Dd_656W9PCmO5Dmx1dAf4m_LyrSkuj-EFDxg5g4ykpcLRBMFuFTFEUoo_DRJblKRfiO4kvrsbKev2fM"
             priority
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
 
@@ -131,7 +133,8 @@ export default function Home() {
                   fill
                   className="object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2bHzLdlt8cINufKHBcOBEDOJYilYMICwzAl7vSbyCyn3iAzqK0cnjMNDq9_iDte26ZBYvvUk5Cp50YK8kj5Ul-CdOCxgL_zf1q03isuUWiDl3N1TO7lTSDJK0p9tJaIkUL3_ErfTfjM-b9JyD6nxJpYlfRFGW3WJ1h_wrRvSDGy2ihKENVaC4MbR1iZAT1TVRIk8s1IkCIWPa22Nnj0WSxT22qfLHoWdZunqByeQxOYHl49CvCDMOtClEFkkhEfx4s2VZJd9tHoU"
-                  alt="Modelo 1"
+                  alt="Modelo vistiendo la colección Esencia Dorada de ADELAI"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-2/3 aspect-square bg-white dark:bg-background-dark p-4 shadow-xl z-20 hidden md:block">
@@ -140,7 +143,8 @@ export default function Home() {
                     fill
                     className="object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkrFiMDPl6noFnNKRWCkrjp0vGH3XVlgYpwHynvvZRrzZBh2bOXI28lnqxh5E0U2pqxK6HPbFctC205Sb8ir2z3rckuJ8apBfCfIf-AKbdMcgZYxn7t6W4ljiqzZU12vxLmjJ3xSCErAPWKmfjKFMwKR6XZjWqkQ2r8sI60EMoxZMIOHKghQ55-escp6Z1FyMvnxLgzisZfJTV9xK42_8AqCmz2LFXz2TI-YBz-VNWJ1aEBjBH7bd7fnprw4r4u6BBJ6PFkItc8mw"
-                    alt="Detalle"
+                    alt="Detalle en primer plano de collar de oro ADELAI"
+                    sizes="(max-width: 768px) 50vw, 25vw"
                   />
                 </div>
               </div>
@@ -180,7 +184,8 @@ export default function Home() {
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-105"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuUFauSEKOFmIaXHmoyHGebNyioRSRkEunQHQFcdAp4tRH_swD6cT6UF2O_z7pqP07G-Zt5SOPZYdBC6tGjtiojiWZvT943Z9UpLhwWdyvDVehC6ZAVhl98mlm8pyHFcepHMRE2FQVzoaIbaoU0WkMQM1cwI6gs79bc0p2Tr3shT1d4Q6skfjo25nSGlKxxHFqAuPFsF76jaGG7WaV81HQb_LVBp_37vIj--NqoResi46_OyGeZ6_sZ2flTTrGs3F2HGw1AoLtbUA"
-              alt="Nuevos"
+              alt="Nuevos lanzamientos de joyería minimalista ADELAI"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center pointer-events-none">
               <div className="text-center px-6 pointer-events-auto">
@@ -199,7 +204,7 @@ export default function Home() {
                 { img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDpLH5HGc1kmArtJ6BJmlS3bw5cpNmRMsgkv2GRxXlwy-_cb07XX7fLTzX__AnK-SI5IOtVmqsBMrVLEfFgIUaFeMJSWTZDAdT3XVta8goLP4KLgKFmxSviKLOtQOehxk8m-v26e5_q7PSDBj9KSF33pAhEXf1DD6e9Q5Rgw3HX56MRMet0wgkuoSNFL7gEMj2SahyFeodgEAcewCal27sKqHzMRoVGNySEGCMUriNIznYg89IL9CFQEpUkqvjkrP9ZMX3lcGRjH1I", tag: "Pulseras", link: "/categoria/brazaletes" }
               ].map((item, idx) => (
                 <div key={idx} className="relative group overflow-hidden h-full block">
-                  <Image fill className="object-cover transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none" src={item.img} alt={item.tag} />
+                  <Image fill className="object-cover transition-transform duration-700 group-hover:scale-105 select-none pointer-events-none" src={item.img} alt={`Categoría ${item.tag} - Joyería ADELAI`} sizes="(max-width: 768px) 50vw, 25vw" />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                     <div className="flex flex-col items-center gap-4 select-none">
                       <span className="text-white uppercase tracking-[0.4em] font-medium text-[10px] md:text-sm lg:text-lg drop-shadow-md">{item.tag}</span>
