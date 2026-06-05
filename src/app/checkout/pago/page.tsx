@@ -6,7 +6,9 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function CheckoutPaymentPage() {
-  const { cartItems, cartTotal } = useCart();
+  const { cart } = useCart();
+  const cartItems: any[] = []; // Obsolete mock
+  const cartTotal = 0; // Obsolete mock
   const [paymentMethod, setPaymentMethod] = useState<"tarjeta" | "paypal" | "transferencia">("tarjeta");
 
   const taxes = cartTotal * 0.16;

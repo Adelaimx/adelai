@@ -2,41 +2,66 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useCart } from "@/contexts/CartContext";
+import gsap from "gsap";
 
 export function CartSheet() {
   const { 
+    cart,
     isCartOpen, 
     setIsCartOpen, 
-    cartItems, 
-    cartCount, 
-    cartTotal, 
     removeFromCart, 
-    updateQuantity 
+    updateQuantity,
+    isPending
   } = useCart();
 
-  // Prevent body scroll when cart is open
+  const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Prevent body scroll when cart is open and handle animations
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = "hidden";
+      gsap.set(containerRef.current, { display: 'block' });
+      gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+      gsap.fromTo(drawerRef.current, 
+        { x: '100%' }, 
+        { x: '0%', duration: 0.6, ease: 'back.out(1.2)' }
+      );
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      gsap.to(overlayRef.current, { opacity: 0, duration: 0.3 });
+      gsap.to(drawerRef.current, { 
+        x: '100%', 
+        duration: 0.5, 
+        ease: 'back.in(1.2)',
+        onComplete: () => {
+          gsap.set(containerRef.current, { display: 'none' });
+        }
+      });
     }
   }, [isCartOpen]);
 
-  if (!isCartOpen) return null;
+  const cartLines = cart?.lines?.edges.map((e) => e.node) || [];
+  const cartTotal = parseFloat(cart?.cost?.totalAmount?.amount || "0");
+  const cartCount = cart?.totalQuantity || 0;
 
   return (
-    <>
+    <div ref={containerRef} className="fixed inset-0 z-50 hidden" aria-hidden={!isCartOpen}>
       {/* Backdrop Overlay */}
       <div 
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity"
+        ref={overlayRef}
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0"
         onClick={() => setIsCartOpen(false)}
       />
 
       {/* Shopping Cart Sidebar Drawer */}
-      <div className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-background-dark shadow-2xl z-50 flex flex-col transform transition-transform duration-300 translate-x-0">
+      <div 
+        ref={drawerRef}
+        className={`absolute top-0 right-0 h-full w-full max-w-md bg-background-light shadow-2xl flex flex-col translate-x-full will-change-transform ${isPending ? 'opacity-70 pointer-events-none' : ''}`}
+      >
         
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-primary/10">
@@ -56,41 +81,50 @@ export function CartSheet() {
 
         {/* Items List */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {cartItems.length === 0 ? (
+          {cartLines.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
-              <span className="material-symbols-outlined text-6xl text-slate-200 dark:text-slate-700">production_quantity_limits</span>
-              <p className="font-bold text-slate-500 dark:text-slate-400">Tu carrito está vacío</p>
+              <span className="material-symbols-outlined text-6xl text-primary/20">production_quantity_limits</span>
+              <p className="font-bold text-secondary">Tu carrito está vacío</p>
               <button 
                 onClick={() => setIsCartOpen(false)}
-                className="mt-4 px-6 py-2 border border-primary text-primary hover:bg-primary hover:text-white transition-colors uppercase text-xs font-bold tracking-widest"
+                className="btn-secondary mt-4"
               >
                 Seguir Comprando
               </button>
             </div>
           ) : (
-            cartItems.map((item) => {
-              const uniqueId = `${item.id}-${item.variantId}-${item.size}`;
+            cartLines.map((item) => {
+              const product = item.merchandise.product;
+              const title = product.title;
+              const variantTitle = item.merchandise.selectedOptions.map(o => o.value).join(' / ');
+              const price = parseFloat(item.cost.totalAmount.amount);
+              const imageUrl = product.featuredImage?.url || "";
+
               return (
-                <div key={uniqueId} className="flex gap-4 group">
-                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg bg-primary/5">
-                    <Image 
-                      src={item.image} 
-                      alt={item.name} 
-                      width={96} height={96}
-                      className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                    />
+                <div key={item.id} className="flex gap-4 group">
+                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg bg-primary/5 relative">
+                    {imageUrl && (
+                      <Image 
+                        src={imageUrl} 
+                        alt={title} 
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                      />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col justify-between py-1">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-100">{item.name}</h3>
-                        <p className="text-xs text-slate-500 mt-1 uppercase">
-                          {item.size !== "U" && `Talla: ${item.size} • `}{item.colorName}
-                        </p>
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">{title}</h3>
+                        {variantTitle !== "Default Title" && (
+                          <p className="text-xs text-secondary mt-1 uppercase">
+                            {variantTitle}
+                          </p>
+                        )}
                       </div>
                       <button 
-                        onClick={() => removeFromCart(uniqueId)}
-                        className="text-slate-400 hover:text-red-500 transition-colors"
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-secondary/70 hover:text-red-500 transition-colors"
                         title="Eliminar"
                       >
                         <span className="material-symbols-outlined text-xl">delete_outline</span>
@@ -99,16 +133,16 @@ export function CartSheet() {
                     <div className="flex justify-between items-end">
                       <div className="flex items-center border border-primary/20 rounded-lg h-8">
                         <button 
-                          onClick={() => updateQuantity(uniqueId, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.id, item.merchandise.id, item.quantity - 1)}
                           className="px-2 text-primary hover:bg-primary/5 h-full"
                         >-</button>
-                        <span className="px-3 text-xs font-bold text-slate-900 dark:text-slate-100">{item.quantity}</span>
+                        <span className="px-3 text-xs font-bold text-primary">{item.quantity}</span>
                         <button 
-                          onClick={() => updateQuantity(uniqueId, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.id, item.merchandise.id, item.quantity + 1)}
                           className="px-2 text-primary hover:bg-primary/5 h-full"
                         >+</button>
                       </div>
-                      <p className="text-sm font-bold text-slate-900 dark:text-slate-100">${(item.price * item.quantity).toFixed(2)}</p>
+                      <p className="text-sm font-bold text-primary">${price.toFixed(2)}</p>
                     </div>
                   </div>
                 </div>
@@ -118,34 +152,40 @@ export function CartSheet() {
         </div>
 
         {/* Footer / Summary */}
-        {cartItems.length > 0 && (
+        {cartLines.length > 0 && (
           <div className="p-6 bg-primary/5 border-t border-primary/10 space-y-4">
             <div className="space-y-2">
-              <div className="flex justify-between text-xs uppercase tracking-widest text-slate-500">
+              <div className="flex justify-between text-xs uppercase tracking-widest text-secondary">
                 <span>Subtotal</span>
                 <span>${cartTotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-xs uppercase tracking-widest text-slate-500">
+              <div className="flex justify-between text-xs uppercase tracking-widest text-secondary">
                 <span>Envío</span>
                 <span className="text-primary font-bold">{cartTotal > 999 ? "Gratis" : "Calculado en Checkout"}</span>
               </div>
-              <div className="pt-2 flex justify-between text-base font-bold uppercase tracking-widest text-slate-900 dark:text-slate-100">
+              <div className="pt-2 flex justify-between text-base font-bold uppercase tracking-widest text-primary">
                 <span>Total</span>
                 <span>${cartTotal.toFixed(2)}</span>
               </div>
             </div>
             
-            <Link href="/checkout/carrito" onClick={() => setIsCartOpen(false)} className="w-full bg-primary hover:bg-slate-900 dark:hover:bg-slate-700 text-white py-4 font-bold uppercase tracking-[0.2em] text-sm transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 rounded">
-              Finalizar Compra
-              <span className="material-symbols-outlined text-lg">arrow_right_alt</span>
-            </Link>
+            {cart?.checkoutUrl ? (
+              <a href={cart.checkoutUrl} className="btn-primary w-full py-4 text-sm rounded">
+                Finalizar Compra
+                <span className="material-symbols-outlined text-lg">arrow_right_alt</span>
+              </a>
+            ) : (
+              <button disabled className="btn-primary w-full py-4 text-sm opacity-50 cursor-not-allowed rounded">
+                Cargando...
+              </button>
+            )}
             
-            <p className="text-[10px] text-center text-slate-400 uppercase tracking-widest leading-relaxed">
+            <p className="text-[10px] text-center text-secondary/70 uppercase tracking-widest leading-relaxed">
               Impuestos incluidos. Envío calculado al finalizar el pedido.
             </p>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

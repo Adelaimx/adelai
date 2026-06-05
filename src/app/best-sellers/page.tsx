@@ -1,11 +1,20 @@
 import { ProductFilter } from "@/components/ui/ProductFilter";
 import { ProductGrid } from "@/components/ui/ProductGrid";
-import { PRODUCTS } from "@/lib/mockProducts";
+import { getProducts } from "@/lib/shopify/queries/product";
+import { getCollections } from "@/lib/shopify/queries/collection";
 import { ExcellenceSection } from "@/components/ui/ExcellenceSection";
 
-export default function BestSellersPage() {
-  // Mock data for the Best Sellers
-  const products = PRODUCTS;
+export default async function BestSellersPage() {
+  // Fetch real data from Shopify
+  const collections = await getCollections();
+  const bestSellersCollection = collections.find(c => c.title.toLowerCase().includes('best seller') || c.handle.includes('best-seller'));
+  
+  let products = [];
+  if (bestSellersCollection) {
+    products = bestSellersCollection.products.edges.map(e => e.node);
+  } else {
+    products = await getProducts({ sortKey: 'BEST_SELLING' });
+  }
 
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">
@@ -25,7 +34,7 @@ export default function BestSellersPage() {
 
       {/* Content with Sidebar */}
       <div className="mx-auto flex flex-col lg:flex-row w-full max-w-7xl items-stretch gap-0 px-0 py-0">
-        <ProductFilter />
+        <ProductFilter products={products} />
         <ProductGrid products={products} />
       </div>
 

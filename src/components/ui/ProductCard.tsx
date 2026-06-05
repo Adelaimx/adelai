@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { TransitionLink as Link } from "@/components/ui/TransitionLink";
 import { useState } from "react";
-import { Product } from "@/types/design";
+import { Product } from "@/lib/shopify/types";
 import { useCart } from "@/contexts/CartContext";
 
 interface ProductCardProps {
@@ -18,10 +18,17 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { addToCart } = useCart();
 
-  const activeVariant = product.variants[activeVariantIndex];
-  // Guard against missing images
-  const images = activeVariant?.images || [];
-  const currentPrice = activeVariant?.price ?? product.basePrice;
+  const variants = product.variants?.edges.map(e => e.node) || [];
+  const activeVariant = variants[activeVariantIndex];
+  
+  // Extract images from variant or fallback to product images
+  const images = activeVariant?.image 
+    ? [activeVariant.image.url] 
+    : (product.images?.edges.map(e => e.node.url) || [product.featuredImage?.url].filter(Boolean) as string[]);
+    
+  const currentPrice = activeVariant?.price?.amount 
+    ? parseFloat(activeVariant.price.amount) 
+    : parseFloat(product.priceRange.minVariantPrice.amount);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -42,15 +49,10 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart({
-      id: product.id,
-      variantId: activeVariant.id,
-      name: product.name,
-      price: currentPrice,
-      size: activeVariant.sizes[0] || "U",
-      colorName: activeVariant.colorName,
-      image: images[0] || ""
-    });
+    if (activeVariant) {
+      // Shopify variant IDs are gid://shopify/ProductVariant/123456
+      addToCart(activeVariant.id, 1);
+    }
   };
 
   if (!activeVariant) return null;
@@ -68,7 +70,7 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           {images.length > 0 && (
             <Image
               src={images[currentImageIndex]}
-              alt={`${product.name} - ${activeVariant.colorName}`}
+              alt={`${product.title}`}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority={priority}
@@ -111,7 +113,8 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
         
         {/* Bottom Actions Overlay */}
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end gap-2 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none">
-          <Link href={`/producto/${product.id}`} className="w-full pointer-events-auto cursor-pointer">
+          {/* Usar el handle (slug) en lugar del ID para la URL */}
+          <Link href={`/producto/${product.handle}`} className="w-full pointer-events-auto cursor-pointer">
             <button className="w-full translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:bg-primary hover:text-white cursor-pointer">
               VER PRODUCTO
             </button>
@@ -119,7 +122,7 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           <button 
             onClick={handleAddToCart}
             className="w-full pointer-events-auto translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl cursor-pointer"
-            aria-label={`Añadir ${product.name} al carrito`}
+            aria-label={`Añadir ${product.title} al carrito`}
           >
             {forceAddMode}
           </button>
@@ -127,28 +130,31 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
       </div>
 
       {/* Product Info */}
-      {/* Product Info */}
       <div className="flex flex-col flex-1">
         <h3 className="text-sm font-medium tracking-wide mb-1">
-          {product.name}
+          {product.title}
         </h3>
         <p className="text-sm font-bold text-primary">${currentPrice.toFixed(2)}</p>
         
-        {/* Dynamic Color Variants */}
+        {/* Dynamic Color Variants (Metafields) */}
         <div className="mt-auto pt-2 z-10">
-          {product.variants.length > 0 && (
+          {variants.length > 1 && (
             <div className="flex gap-2">
-              {product.variants.map((variant, idx) => (
+              {variants.map((variant, idx) => {
+                const colorHex = variant.colorHex?.value || "#cccccc";
+                const colorName = variant.selectedOptions.find(o => o.name === "Color")?.value || "Color";
+                
+                return (
                   <button 
                     key={variant.id}
                     onClick={(e) => handleVariantChange(e, idx)}
-                    style={{ backgroundColor: variant.colorHex }}
+                    style={{ backgroundColor: colorHex }}
                     className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
-                    aria-label={`Seleccionar color ${variant.colorName} para ${product.name}`}
-                    title={variant.colorName}
+                    aria-label={`Seleccionar color ${colorName} para ${product.title}`}
+                    title={colorName}
                   />
-                    
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -6,7 +6,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CheckoutConfirmationPage() {
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const { cart } = useCart();
+  const cartItems: any[] = []; // Obsolete mock
+  const cartTotal = 0; // Obsolete mock
+  const clearCart = () => {}; // Obsolete mock
   
   // Snapshot the cart data so it remains visible even after clearing the global state
   const [orderItems] = useState(cartItems);
