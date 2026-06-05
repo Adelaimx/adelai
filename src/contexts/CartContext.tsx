@@ -1,94 +1,96 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-
-export interface CartItem {
-  id: string; // Base product ID
-  variantId: string; // ID of the specific color variant
-  name: string;
-  price: number;
-  quantity: number;
-  size: string;
-  colorName: string;
-  image: string;
-}
+import React, { createContext, useContext, useState, useTransition } from 'react';
+import { Cart } from '../lib/shopify/types';
+import { addCartItem, addCartItems, removeCartItem, updateItemQuantity } from '../app/actions/cart';
 
 interface CartContextType {
-  cartItems: CartItem[];
+  cart: Cart | undefined;
   cartCount: number;
-  cartTotal: number;
   isCartOpen: boolean;
+  isPending: boolean;
   setIsCartOpen: (isOpen: boolean) => void;
-  addToCart: (item: Omit<CartItem, "quantity">, quantityToAdd?: number) => void;
-  removeFromCart: (uniqueId: string) => void;
-  updateQuantity: (uniqueId: string, quantity: number) => void;
-  clearCart: () => void;
+  addToCart: (variantId: string, quantity?: number) => Promise<void>;
+  addMultipleToCart: (lines: { merchandiseId: string; quantity: number }[]) => Promise<void>;
+  removeFromCart: (lineId: string) => Promise<void>;
+  updateQuantity: (lineId: string, variantId: string, quantity: number) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+export function CartProvider({
+  children,
+  initialCart
+}: {
+  children: React.ReactNode;
+  initialCart: Cart | undefined;
+}) {
+  const [cart, setCart] = useState<Cart | undefined>(initialCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  // Helper to generate a unique key for items (combining product ID, variant, and size)
-  const getUniqueId = (item: Pick<CartItem, "id" | "variantId" | "size">) => {
-    return `${item.id}-${item.variantId}-${item.size}`;
-  };
+  const cartCount = cart?.totalQuantity || 0;
 
-  const addToCart = (newItem: Omit<CartItem, "quantity">, quantityToAdd: number = 1) => {
-    setCartItems((prev) => {
-      const existingItemIndex = prev.findIndex(
-        (item) => getUniqueId(item) === getUniqueId(newItem)
-      );
-
-      if (existingItemIndex >= 0) {
-        // Increase quantity if it already exists
-        const updatedCart = [...prev];
-        updatedCart[existingItemIndex].quantity += quantityToAdd;
-        return updatedCart;
+  const addToCart = async (variantId: string, quantity: number = 1) => {
+    startTransition(async () => {
+      const res = await addCartItem(variantId, quantity);
+      if (res.error) {
+        console.error(res.error);
+        alert(res.error);
+      } else if (res.cart) {
+        setCart(res.cart);
+        setIsCartOpen(true);
       }
-
-      // Add new item
-      return [...prev, { ...newItem, quantity: quantityToAdd }];
     });
-    
-    // Automatically open cart when adding
-    setIsCartOpen(true);
   };
 
-  const removeFromCart = (uniqueId: string) => {
-    setCartItems((prev) => prev.filter((item) => getUniqueId(item) !== uniqueId));
+  const addMultipleToCart = async (lines: { merchandiseId: string; quantity: number }[]) => {
+    startTransition(async () => {
+      const res = await addCartItems(lines);
+      if (res.error) {
+        console.error(res.error);
+        alert(res.error);
+      } else if (res.cart) {
+        setCart(res.cart);
+        setIsCartOpen(true);
+      }
+    });
   };
 
-  const clearCart = () => {
-    setCartItems([]);
+  const removeFromCart = async (lineId: string) => {
+    startTransition(async () => {
+      const res = await removeCartItem(lineId);
+      if (res.error) {
+        console.error(res.error);
+      } else if (res.cart) {
+        setCart(res.cart);
+      }
+    });
   };
 
-  const updateQuantity = (uniqueId: string, quantity: number) => {
-    if (quantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        getUniqueId(item) === uniqueId ? { ...item, quantity } : item
-      )
-    );
+  const updateQuantity = async (lineId: string, variantId: string, quantity: number) => {
+    startTransition(async () => {
+      const res = await updateItemQuantity(lineId, variantId, quantity);
+      if (res.error) {
+        console.error(res.error);
+      } else if (res.cart) {
+        setCart(res.cart);
+      }
+    });
   };
-
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
+        cart,
         cartCount,
-        cartTotal,
         isCartOpen,
+        isPending,
         setIsCartOpen,
         addToCart,
+        addMultipleToCart,
         removeFromCart,
-        updateQuantity,
-        clearCart,
+        updateQuantity
       }}
     >
       {children}
@@ -99,7 +101,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
+    throw new Error('useCart must be used within a CartProvider');
   }
   return context;
 }

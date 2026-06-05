@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { CartProvider } from "@/contexts/CartContext";
+import { getCart } from "@/app/actions/cart";
+import { InitialLoader } from "@/components/ui/InitialLoader";
+import { PageTransitionCurtain } from "@/components/ui/PageTransitionCurtain";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
+const montserrat = localFont({
+  src: '../../public/Tipografia/montserrat.regular.otf',
+  variable: '--font-montserrat',
+  display: 'swap',
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
+const carmela = localFont({
+  src: '../../public/Tipografia/Carmela.otf',
+  variable: '--font-carmela',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -37,20 +42,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialCart = await getCart();
+
   return (
-    <html lang="es" className={`${manrope.variable} ${playfair.variable}`}>
+    <html lang="es" className={`${montserrat.variable} ${carmela.variable} scroll-smooth`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased flex flex-col min-h-screen">
-        <CartProvider>
+        <InitialLoader />
+        <PageTransitionCurtain />
+        <CartProvider initialCart={initialCart}>
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-primary text-white px-4 py-2 rounded-md">
             Saltar al contenido
           </a>

@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { ProductCard } from "@/components/ui/ProductCard";
-import { Product } from "@/types/design";
+import { Product } from "@/lib/shopify/types";
 
 interface BestSellersCarouselProps {
   products: Product[];

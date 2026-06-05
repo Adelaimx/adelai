@@ -1,31 +1,102 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #9E8E7F;
-  --color-secondary: #8A8786;
-  --color-accent: #B4B0A7;
-  --color-background-light: #f7f7f7;
-  --color-background-dark: #1a1918;
+  --color-primary: #442d2c;
+  --color-secondary: #6d5c4f;
+  --color-beige: #c7bba9;
+  --color-ivory: #efeae2;
+  --color-gold: #c39e5c;
+  --color-background-light: var(--color-ivory);
+  --color-accent: #c7bba9;
   
-  --font-display: var(--font-manrope);
-  --font-serif: var(--font-playfair);
+  --font-display: var(--font-carmela);
+  --font-serif: var(--font-carmela);
+  --font-sans: var(--font-montserrat);
   
-  --radius-DEFAULT: 12px;
+  --radius-DEFAULT: 8px;
   --radius-lg: 12px;
-  --radius-xl: 12px;
-  --radius-full: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
 }
-
-@custom-variant dark (&:where(.dark, .dark *));
 
 @layer utilities {
   .glass-nav {
-    background: rgba(247, 247, 247, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(68, 45, 44, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
+  
+  .shine-text {
+    background: linear-gradient(
+      120deg,
+      var(--color-gold) 40%,
+      #fff4d4 50%,
+      var(--color-gold) 60%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 4s linear infinite;
+  }
+  
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* Info Section Animations */
+  @keyframes fillWater {
+    0% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+  .animate-water-fill {
+    background: linear-gradient(to top, var(--color-primary) 50%, transparent 50%);
+    background-size: 100% 200%;
+    background-position: bottom;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-primary);
+    animation: fillWater 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes shieldShine {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+  .animate-shield-sparkle {
+    color: transparent;
+    -webkit-text-stroke: 1px #9ca3af;
+    background: linear-gradient(
+      120deg,
+      #9ca3af 40%,
+      #ffffff 50%,
+      #9ca3af 60%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shieldShine 3s linear infinite;
+  }
+
+  @keyframes swayWind {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .animate-leaf-wind {
+    display: inline-block;
+    transform-origin: bottom center;
+    animation: swayWind 4s ease-in-out infinite;
+    color: var(--color-primary);
+  }
+
   .hero-gradient {
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.6) 100%);
+    background: linear-gradient(to bottom, rgba(68,45,44,0) 0%, rgba(68,45,44,0.1) 60%, rgba(68,45,44,0.4) 100%);
   }
   .hide-scrollbar {
     -ms-overflow-style: none;
@@ -34,21 +105,29 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* Standard Buttons */
+  .btn-primary {
+    @apply bg-primary text-ivory px-8 py-3 text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#32201f] transition-all duration-300 rounded-sm flex items-center justify-center gap-2;
+  }
+  .btn-secondary {
+    @apply bg-transparent border border-secondary text-secondary px-8 py-3 text-xs font-bold tracking-[0.2em] uppercase hover:bg-secondary hover:text-ivory transition-all duration-300 rounded-sm flex items-center justify-center gap-2;
+  }
 }
 
 @layer base {
   body {
     background-color: var(--color-background-light);
-    color: var(--color-slate-900);
-    font-family: var(--font-display);
+    color: var(--color-primary);
+    font-family: var(--font-sans);
     transition: background-color 300ms, color 300ms;
+    -webkit-font-smoothing: antialiased;
   }
   
-  .dark body {
-    background-color: var(--color-background-dark);
-    color: var(--color-slate-100);
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    color: var(--color-primary);
   }
-
   button, .btn-radius { 
     border-radius: 12px !important; 
   }

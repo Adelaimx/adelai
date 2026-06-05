@@ -5,7 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CheckoutShippingPage() {
-  const { cartItems, cartTotal } = useCart();
+  const { cart } = useCart();
+  const cartItems: any[] = []; // Obsolete mock
+  const cartTotal = 0; // Obsolete mock
 
   const taxes = cartTotal * 0.16;
   const shipping = cartTotal > 999 ? 0 : 150;

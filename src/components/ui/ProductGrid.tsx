@@ -1,9 +1,10 @@
 "use client";
 
 import { ProductCard } from "@/components/ui/ProductCard";
-import { Product } from "@/types/design";
+import { Product } from "@/lib/shopify/types";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useCallback, useState, useEffect } from "react";
+import { categorizeSize, getProductCategory } from "@/lib/utils/categorizeSize";
 
 interface ProductGridProps {
   products: Product[];
@@ -16,9 +17,12 @@ export function ProductGrid({ products }: ProductGridProps) {
   const router = useRouter();
 
   // Active filters from URL
-  const selectedColor = searchParams.get("color");
-  const selectedSize = searchParams.get("talla");
-  const selectedMaterial = searchParams.get("material");
+  const selectedColor = searchParams.get("color")?.toLowerCase();
+  const selectedTamano = searchParams.get("tamano"); // 'Delicado', 'Clásico', etc.
+  const selectedLargo = searchParams.get("largo"); // 'Corto', 'Medio', etc.
+  const isAjustable = searchParams.get("ajustable") === "true";
+  const exactSize = searchParams.get("talla_exacta"); // Original raw size
+  const selectedMaterial = searchParams.get("material")?.toLowerCase();
   const sortBy = searchParams.get("sort") || "recent";
 
   // Pagination State
@@ -27,42 +31,66 @@ export function ProductGrid({ products }: ProductGridProps) {
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedColor, selectedSize, selectedMaterial, sortBy]);
+  }, [selectedColor, selectedTamano, selectedLargo, isAjustable, exactSize, selectedMaterial, sortBy]);
 
   // Filter products based on URL params
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      // Color filter matching (checking inside variants)
+      // Color filter matching (checking inside Shopify variant options)
       if (selectedColor) {
-        const hasColor = product.variants.some((v) => 
-          v.colorName.toLowerCase().replace(/\s+/g, '_') === selectedColor ||
-          (selectedColor === "oro" && v.colorName.toLowerCase().includes("oro")) ||
-          (selectedColor === "plata" && v.colorName.toLowerCase().includes("plata"))
-        );
+        const hasColor = product.variants?.edges.some(({ node }) => {
+          const colorOption = node.selectedOptions.find(o => o.name === "Color")?.value?.toLowerCase();
+          if (!colorOption) return false;
+          
+          return colorOption === selectedColor || 
+                 (selectedColor === "oro" && colorOption.includes("oro")) ||
+                 (selectedColor === "plata" && colorOption.includes("plata")) ||
+                 (selectedColor === "bicolor" && (colorOption === "bicolor" || colorOption === "bi color"));
+        });
         if (!hasColor) return false;
       }
 
-      // Size filter matching (checking inside variants)
-      if (selectedSize) {
-        const hasSize = product.variants.some((v) => v.sizes.includes(selectedSize));
-        if (!hasSize) return false;
+      // Semantic Size & Exact Size matching
+      if (selectedTamano || selectedLargo || isAjustable || exactSize) {
+        // We need to check if ANY of the product variants matches the selected semantic filters simultaneously.
+        // Or if one variant matches tamano and another matches largo? Usually it's per variant.
+        const pCat = getProductCategory(product);
+        
+        const hasMatchingVariant = product.variants?.edges.some(({ node }) => {
+          const sizeOption = node.selectedOptions.find(o => o.name === "Talla" || o.name === "Size")?.value;
+          if (!sizeOption) return false;
+
+          const info = categorizeSize(sizeOption, pCat);
+
+          if (selectedTamano && info.semanticSize !== selectedTamano) return false;
+          if (selectedLargo && info.chainLength !== selectedLargo) return false;
+          if (isAjustable && !info.isAdjustable) return false;
+          if (exactSize && info.rawSize !== exactSize) return false;
+
+          return true;
+        });
+
+        if (!hasMatchingVariant) return false;
       }
 
       // Material filter matching
-      if (selectedMaterial && product.material) {
-          // Simple match, mock products need 'material' fields updated for this to be perfect.
-          const currentMat = product.material.toLowerCase().replace(/\s+/g, '_');
-          if (currentMat !== selectedMaterial) return false;
+      // Note: In a real Shopify setup, material might be a metafield or a tag. We'll check tags.
+      if (selectedMaterial) {
+        const hasMaterialTag = product.tags?.some(tag => tag.toLowerCase().replace(/\s+/g, '_') === selectedMaterial);
+        if (!hasMaterialTag) return false;
       }
 
       return true;
     }).sort((a, b) => {
-        if (sortBy === "price_asc") return a.basePrice - b.basePrice;
-        if (sortBy === "price_desc") return b.basePrice - a.basePrice;
+        const priceA = parseFloat(a.priceRange.minVariantPrice.amount);
+        const priceB = parseFloat(b.priceRange.minVariantPrice.amount);
+
+        if (sortBy === "price_asc") return priceA - priceB;
+        if (sortBy === "price_desc") return priceB - priceA;
         return 0; // "recent" defaults to array order
     });
 
-  }, [products, selectedColor, selectedSize, selectedMaterial, sortBy]);
+  }, [products, selectedColor, selectedTamano, selectedLargo, isAjustable, exactSize, selectedMaterial, sortBy]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
@@ -116,8 +144,8 @@ export function ProductGrid({ products }: ProductGridProps) {
       ) : (
         <div className="flex flex-col items-center justify-center h-64 text-center">
             <span className="material-symbols-outlined text-4xl text-primary/30 mb-4">search_off</span>
-            <h3 className="text-lg font-serif text-slate-600 dark:text-slate-300">No se encontraron productos probando sus filtros.</h3>
-            <p className="text-sm text-slate-400 mt-2">Intente eliminar algunos filtros para ver más resultados.</p>
+            <h3 className="text-lg font-serif text-slate-600 dark:text-slate-300">No se encontraron productos con estos filtros.</h3>
+            <p className="text-sm text-slate-400 mt-2">Intenta eliminar algunos filtros para ver más resultados.</p>
         </div>
       )}
 
