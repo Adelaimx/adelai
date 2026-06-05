@@ -84,21 +84,21 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
               aria-label="Imagen anterior"
             >
               <span className="material-symbols-outlined text-sm">chevron_left</span>
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
               aria-label="Siguiente imagen"
             >
               <span className="material-symbols-outlined text-sm">chevron_right</span>
             </button>
             
             {/* Dots */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10 pointer-events-none">
+            <div className="absolute top-4 left-0 right-0 flex justify-center gap-1.5 opacity-100 lg:opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10 pointer-events-none">
               {images.map((_, idx) => (
                 <div
                   key={idx}
@@ -112,16 +112,16 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
         )}
         
         {/* Bottom Actions Overlay */}
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end gap-2 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/50 to-transparent z-10 pointer-events-none">
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end gap-2 p-4 opacity-100 lg:opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/60 to-transparent z-10 pointer-events-none">
           {/* Usar el handle (slug) en lugar del ID para la URL */}
           <Link href={`/producto/${product.handle}`} className="w-full pointer-events-auto cursor-pointer">
-            <button className="w-full translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:bg-primary hover:text-white cursor-pointer">
+            <button className="w-full translate-y-0 lg:translate-y-4 group-hover:translate-y-0 transition-all duration-300 rounded-sm bg-white/95 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 hover:bg-primary hover:text-white cursor-pointer">
               VER PRODUCTO
             </button>
           </Link>
           <button 
             onClick={handleAddToCart}
-            className="w-full pointer-events-auto translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl cursor-pointer"
+            className="w-full pointer-events-auto translate-y-0 lg:translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 rounded-sm bg-primary py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:bg-slate-900 shadow-xl cursor-pointer"
             aria-label={`Añadir ${product.title} al carrito`}
           >
             {forceAddMode}
@@ -141,14 +141,23 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
           {variants.length > 1 && (
             <div className="flex gap-2">
               {variants.map((variant, idx) => {
-                const colorHex = variant.colorHex?.value || "#cccccc";
                 const colorName = variant.selectedOptions.find(o => o.name === "Color")?.value || "Color";
+                const id = colorName.toLowerCase();
+                let hex = variant.colorHex?.value || "#cccccc";
+
+                if (id === 'dorado' || id === 'oro') {
+                  hex = '#D4AF37';
+                } else if (id === 'bicolor' || id === 'bi color') {
+                  hex = 'linear-gradient(135deg, #D4AF37 50%, #C0C0C0 50%)';
+                } else if (id === 'multi color') {
+                  hex = 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 25%, #a1c4fd 50%, #c2e9fb 75%, #fbc2eb 100%)';
+                }
                 
                 return (
                   <button 
                     key={variant.id}
                     onClick={(e) => handleVariantChange(e, idx)}
-                    style={{ backgroundColor: colorHex }}
+                    style={{ background: hex }}
                     className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
                     aria-label={`Seleccionar color ${colorName} para ${product.title}`}
                     title={colorName}

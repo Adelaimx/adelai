@@ -138,6 +138,17 @@ export function ProductDetailsClient({
     }
   }, [availableSizes, activeSize]);
 
+  // Mobile related products carousel state
+  const [activeRelatedIndex, setActiveRelatedIndex] = useState(0);
+
+  useEffect(() => {
+    if (relatedProducts.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveRelatedIndex((prev) => (prev + 1) % relatedProducts.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [relatedProducts.length]);
+
   // Find exact active variant
   const activeVariant =
     variants.find((v) => {
@@ -208,9 +219,7 @@ export function ProductDetailsClient({
         <span className="text-secondary/60 material-symbols-outlined text-xs">
           chevron_right
         </span>
-        <span className="text-secondary font-medium">
-          {product.title}
-        </span>
+        <span className="text-secondary font-medium">{product.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -353,9 +362,9 @@ export function ProductDetailsClient({
           {colorOptions.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold uppercase tracking-widest text-secondary">
+                <span className="text-sm font-bold uppercase tracking-widest text-secondary ">
                   Color:{' '}
-                  <span className="text-slate-900 dark:text-slate-100">
+                  <span className="text-slate-900 dark:text-primary-100">
                     {colorOptions.find((c) => c.id === activeColorId)?.label ||
                       activeColorId}
                   </span>
@@ -422,7 +431,7 @@ export function ProductDetailsClient({
                   -
                 </button>
                 <input
-                  className="w-12 text-center border-none focus:ring-0 bg-transparent font-bold text-slate-900 dark:text-slate-100 p-0"
+                  className="w-12 text-center border-none focus:ring-0 bg-transparent font-bold text-slate-900 dark:text-primary-100 p-0"
                   readOnly
                   type="number"
                   value={quantity}
@@ -495,7 +504,7 @@ export function ProductDetailsClient({
           {activeTab === 'specs' ? (
             <div className="grid md:grid-cols-2 gap-10 p-4 sm:p-6 md:p-8 rounded-xl bg-white border border-primary/10">
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-primary-100">
                   Detalles Técnicos
                 </h3>
                 <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
@@ -580,20 +589,58 @@ export function ProductDetailsClient({
 
       {/* Related Products Section */}
       {relatedProducts.length > 0 && (
-        <section className="mt-20 bg-white py-12 px-6 rounded-xl border border-primary/10">
-          <h2 className="text-2xl font-bold mb-8 text-primary">
-            Productos Relacionados
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {relatedProducts.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                forceAddMode="AÑADIR AL CARRITO"
-              />
-            ))}
-          </div>
-        </section>
+        <div className="mt-20 relative p-[2px] rounded-xl overflow-hidden shadow-sm">
+          {/* Animated golden light border */}
+          <div className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#D4AF37_100%)] animate-[spin_3s_ease-in-out_infinite]" />
+          
+          <section className="relative bg-white py-12 px-6 rounded-[10px] z-10 w-full h-full">
+            <h2 className="text-2xl font-bold mb-8 text-primary">
+              Productos Relacionados
+            </h2>
+            
+            {/* Desktop View: Grid */}
+            <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {relatedProducts.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  forceAddMode="AÑADIR AL CARRITO"
+                />
+              ))}
+            </div>
+
+            {/* Mobile View: Carousel */}
+            <div className="sm:hidden relative overflow-hidden w-full">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out" 
+                style={{ transform: `translateX(-${activeRelatedIndex * 100}%)` }}
+              >
+                {relatedProducts.map((p) => (
+                  <div key={p.id} className="w-full flex-shrink-0 px-2">
+                    <ProductCard
+                      product={p}
+                      forceAddMode="AÑADIR AL CARRITO"
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Carousel Indicators */}
+              {relatedProducts.length > 1 && (
+                <div className="flex justify-center gap-2 mt-6">
+                  {relatedProducts.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveRelatedIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition-colors ${idx === activeRelatedIndex ? 'bg-[#D4AF37]' : 'bg-[#D4AF37]/20'}`}
+                      aria-label={`Ir al producto ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
       )}
       <SizeGuideModal
         isOpen={isSizeGuideOpen}

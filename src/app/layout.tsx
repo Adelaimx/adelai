@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   description: "Joyería atemporal para la mujer moderna. Diseñada en España, amada en todo el mundo. Descubre nuestra colección de collares, anillos y aretes en oro de 18k.",
   keywords: ["joyería", "minimalista", "consciente", "españa", "oro 18k", "acero inoxidable", "atemporal"],
   authors: [{ name: "ADELAI Team" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
   openGraph: {
     type: "website",
@@ -40,6 +39,11 @@ export const metadata: Metadata = {
     title: "ADELAI | Joyería Minimalista y Consciente",
     description: "Joyería atemporal para la mujer moderna. Diseñada en España.",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default async function RootLayout({

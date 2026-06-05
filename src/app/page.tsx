@@ -34,9 +34,9 @@ export default async function Home() {
   return (
     <div className="relative flex flex-col pt-0 transition-colors duration-300">
       {/* 1. Hero Section */}
-      <HeroScrollClient 
-        regaloProduct={regaloProduct} 
-        regalosExclusivosCollection={regalosExclusivosCollection} 
+      <HeroScrollClient
+        regaloProduct={regaloProduct}
+        regalosExclusivosCollection={regalosExclusivosCollection}
       />
 
       {/* 2. Info Section */}
@@ -134,7 +134,7 @@ export default async function Home() {
             {/* Overlaid Block */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
               <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-6 md:p-10 flex flex-col items-center gap-6 pointer-events-auto shadow-2xl rounded-[12px]">
-                <h2 className="font-serif text-xl md:text-3xl text-primary tracking-[0.2em] uppercase text-center">
+                <h2 className="font-serif text-xl md:text-3xl text-white tracking-[0.2em] uppercase text-center">
                   Piezas Destacadas
                 </h2>
               </div>

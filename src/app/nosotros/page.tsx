@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function NosotrosPage() {
   return (
@@ -15,7 +15,7 @@ export default function NosotrosPage() {
           />
         </div>
         <div className="relative z-10 text-center text-white px-4">
-          <h2 className="font-serif text-5xl md:text-7xl font-light tracking-[0.2em] uppercase">
+          <h2 className="font-serif text-5xl md:text-7xl font-light tracking-[0.2em] uppercase dark:text-white">
             Nuestra Historia
           </h2>
           <div className="w-16 h-[1px] bg-white mx-auto mt-8"></div>
@@ -36,28 +36,43 @@ export default function NosotrosPage() {
             </div>
             <div className="absolute -bottom-8 -right-8 w-64 h-80 hidden lg:block border border-[#b4afa7]/30 -z-10 translate-x-4 translate-y-4"></div>
           </div>
-          
+
           <div className="order-1 md:order-2 space-y-8">
             <span className="text-primary font-medium tracking-[0.3em] uppercase text-xs">
               Artesanía & Legado
             </span>
-            <h3 className="font-serif text-4xl md:text-5xl text-slate-900 dark:text-white italic leading-tight">
+            <h3 className="font-serif text-4xl md:text-5xl text-slate-900 dark:text-primary italic leading-tight">
               La esencia detrás de cada destello.
             </h3>
-            <div className="space-y-6 text-[#8a8786] dark:text-slate-300 leading-relaxed text-lg font-light">
+            <div className="space-y-6 text-[#8a8786] dark:text-primary-300 leading-relaxed text-lg font-light">
               <p>
-                Fundada bajo la premisa de que la joyería debe ser una extensión del ser, ADELAI nace para redefinir el lujo cotidiano. Cada pieza es un testimonio de nuestra dedicación a la excelencia técnica y la visión artística.
+                Fundada bajo la premisa de que la joyería debe ser una extensión
+                del ser, ADELAI nace para redefinir el lujo cotidiano. Cada
+                pieza es un testimonio de nuestra dedicación a la excelencia
+                técnica y la visión artística.
               </p>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6">
                 <div className="space-y-3">
-                  <h4 className="text-slate-900 dark:text-white font-semibold tracking-wide uppercase text-sm">Waterproof</h4>
-                  <p className="text-sm">Innovamos con materiales resistentes que te permiten llevar la elegancia incluso en los momentos más espontáneos, sin miedo al paso del tiempo o el agua.</p>
+                  <h4 className="text-slate-900 dark:text-primary font-semibold tracking-wide uppercase text-sm">
+                    Waterproof
+                  </h4>
+                  <p className="text-sm">
+                    Innovamos con materiales resistentes que te permiten llevar
+                    la elegancia incluso en los momentos más espontáneos, sin
+                    miedo al paso del tiempo o el agua.
+                  </p>
                 </div>
-                
+
                 <div className="space-y-3">
-                  <h4 className="text-slate-900 dark:text-white font-semibold tracking-wide uppercase text-sm">Artesanía</h4>
-                  <p className="text-sm">Nuestros maestros joyeros esculpen a mano cada detalle, asegurando que no existan dos piezas idénticas. Calidad que se siente al tacto.</p>
+                  <h4 className="text-slate-900 dark:text-primary font-semibold tracking-wide uppercase text-sm">
+                    Artesanía
+                  </h4>
+                  <p className="text-sm">
+                    Nuestros maestros joyeros esculpen a mano cada detalle,
+                    asegurando que no existan dos piezas idénticas. Calidad que
+                    se siente al tacto.
+                  </p>
                 </div>
               </div>
             </div>
@@ -68,44 +83,53 @@ export default function NosotrosPage() {
       {/* Contact Section */}
       <section className="bg-primary/5 py-32 px-6 border-t border-primary/10">
         <div className="max-w-3xl mx-auto text-center">
-          <h3 className="font-serif text-4xl text-slate-900 dark:text-white mb-4">Escríbenos</h3>
-          <p className="text-[#8a8786] dark:text-slate-400 font-light mb-12">
-            ¿Tienes alguna duda o deseas una pieza personalizada? Estamos aquí para atenderte.
+          <h3 className="font-serif text-4xl text-slate-900 dark:text-primary mb-4">
+            Escríbenos
+          </h3>
+          <p className="text-[#8a8786] dark:text-primary-300 font-light mb-12">
+            ¿Tienes alguna duda o deseas una pieza personalizada? Estamos aquí
+            para atenderte.
           </p>
-          
+
           <form className="space-y-6 text-left bg-white dark:bg-background-dark p-8 md:p-12 rounded-xl shadow-sm border border-primary/10">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">Nombre</label>
-                <input 
-                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-white" 
-                  placeholder="Tu nombre" 
+                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">
+                  Nombre
+                </label>
+                <input
+                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-primary"
+                  placeholder="Tu nombre"
                   type="text"
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">Email</label>
-                <input 
-                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-white" 
-                  placeholder="hola@ejemplo.com" 
+                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-stale-300">
+                  Email
+                </label>
+                <input
+                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-primary"
+                  placeholder="hola@ejemplo.com"
                   type="email"
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">Mensaje</label>
-              <textarea 
-                className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 resize-none dark:text-white" 
-                placeholder="¿En qué podemos ayudarte?" 
+              <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">
+                Mensaje
+              </label>
+              <textarea
+                className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 resize-none dark:text-primary"
+                placeholder="¿En qué podemos ayudarte?"
                 rows={4}
               ></textarea>
             </div>
-            
+
             <div className="pt-6">
-              <button 
-                className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all tracking-widest uppercase text-sm cursor-pointer" 
+              <button
+                className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all tracking-widest uppercase text-sm cursor-pointer"
                 type="button"
               >
                 Enviar Mensaje
