@@ -68,13 +68,18 @@ export async function getProducts({
     ${productFragment}
   `;
 
-  const res = await shopifyFetch<{ products: Connection<Product> }>({
-    query,
-    variables: { sortKey, reverse, query: searchQuery },
-    tags: ['products'] // Next.js Cache Tag
-  });
+  try {
+    const res = await shopifyFetch<{ products: Connection<Product> }>({
+      query,
+      variables: { sortKey, reverse, query: searchQuery },
+      tags: ['products'] // Next.js Cache Tag
+    });
 
-  return res.products.edges.map(edge => edge.node);
+    return res.products.edges.map(edge => edge.node);
+  } catch (error) {
+    console.error('Error in getProducts:', error);
+    return [];
+  }
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
@@ -87,11 +92,16 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     ${productFragment}
   `;
 
-  const res = await shopifyFetch<{ product: Product | null }>({
-    query,
-    variables: { handle },
-    tags: ['products'] // Next.js Cache Tag
-  });
+  try {
+    const res = await shopifyFetch<{ product: Product | null }>({
+      query,
+      variables: { handle },
+      tags: ['products'] // Next.js Cache Tag
+    });
 
-  return res.product || undefined;
+    return res.product || undefined;
+  } catch (error) {
+    console.error('Error in getProduct:', error);
+    return undefined;
+  }
 }

@@ -475,7 +475,7 @@ export function ProductDetailsClient({
               <div>
                 <p className="text-sm font-bold">Garantía de Satisfacción</p>
                 <p className="text-xs text-secondary">
-                  30 días para cambios y devoluciones sin costo.
+                  7 días para cambios y devoluciones sin costo.
                 </p>
               </div>
             </div>
@@ -592,12 +592,12 @@ export function ProductDetailsClient({
         <div className="mt-20 relative p-[2px] rounded-xl overflow-hidden shadow-sm">
           {/* Animated golden light border */}
           <div className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#D4AF37_100%)] animate-[spin_3s_ease-in-out_infinite]" />
-          
+
           <section className="relative bg-white py-12 px-6 rounded-[10px] z-10 w-full h-full">
             <h2 className="text-2xl font-bold mb-8 text-primary">
               Productos Relacionados
             </h2>
-            
+
             {/* Desktop View: Grid */}
             <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6">
               {relatedProducts.map((p) => (
@@ -611,20 +611,19 @@ export function ProductDetailsClient({
 
             {/* Mobile View: Carousel */}
             <div className="sm:hidden relative overflow-hidden w-full">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out" 
-                style={{ transform: `translateX(-${activeRelatedIndex * 100}%)` }}
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${activeRelatedIndex * 100}%)`,
+                }}
               >
                 {relatedProducts.map((p) => (
                   <div key={p.id} className="w-full flex-shrink-0 px-2">
-                    <ProductCard
-                      product={p}
-                      forceAddMode="AÑADIR AL CARRITO"
-                    />
+                    <ProductCard product={p} forceAddMode="AÑADIR AL CARRITO" />
                   </div>
                 ))}
               </div>
-              
+
               {/* Carousel Indicators */}
               {relatedProducts.length > 1 && (
                 <div className="flex justify-center gap-2 mt-6">

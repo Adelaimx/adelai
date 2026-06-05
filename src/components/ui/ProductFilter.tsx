@@ -280,7 +280,7 @@ export function ProductFilter({ products }: ProductFilterProps) {
   return (
     <div
       ref={wrapperRef}
-      className="sticky top-[60px] lg:top-[12vh] flex-shrink-0 z-40 bg-white/30 dark:bg-slate-900/40 backdrop-blur-2xl border-b lg:border-b-0 lg:border-r border-white/40 dark:border-white/10 rounded-none shadow-xl overflow-hidden transition-colors duration-300 ml-0 lg:ml-4 mb-4 lg:mb-0"
+      className="sticky top-20 lg:top-22 flex-shrink-0 z-30 bg-white/30 dark:bg-slate-900/40 backdrop-blur-2xl border-b lg:border-b-0 lg:border-r border-white/40 dark:border-white/10 rounded-none shadow-xl overflow-hidden transition-colors duration-300 ml-0 lg:ml-4 mb-4 lg:mb-0"
       style={{ width: 72 }}
     >
       {/* SLIM VIEW (Closed State) */}

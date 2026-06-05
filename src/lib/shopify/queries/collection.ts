@@ -80,12 +80,17 @@ export async function getCollections(query?: string): Promise<Collection[]> {
     ${collectionFragment}
   `;
 
-  const res = await shopifyFetch<{ collections: Connection<Collection> }>({
-    query: q,
-    variables: { query },
-  });
+  try {
+    const res = await shopifyFetch<{ collections: Connection<Collection> }>({
+      query: q,
+      variables: { query },
+    });
 
-  return res.collections.edges.map((e) => e.node);
+    return res.collections.edges.map((e) => e.node);
+  } catch (error) {
+    console.error('Error in getCollections:', error);
+    return [];
+  }
 }
 
 export async function getCollection(handle: string): Promise<Collection | undefined> {
@@ -98,10 +103,15 @@ export async function getCollection(handle: string): Promise<Collection | undefi
     ${collectionFragment}
   `;
 
-  const res = await shopifyFetch<{ collection: Collection }>({
-    query,
-    variables: { handle },
-  });
+  try {
+    const res = await shopifyFetch<{ collection: Collection }>({
+      query,
+      variables: { handle },
+    });
 
-  return res.collection;
+    return res.collection;
+  } catch (error) {
+    console.error('Error in getCollection:', error);
+    return undefined;
+  }
 }
