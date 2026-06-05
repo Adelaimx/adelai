@@ -25,6 +25,7 @@ const collectionFragment = `
           id
           handle
           title
+          availableForSale
           description
           descriptionHtml
           productType
@@ -86,7 +87,13 @@ export async function getCollections(query?: string): Promise<Collection[]> {
       variables: { query },
     });
 
-    return res.collections.edges.map((e) => e.node);
+    return res.collections.edges.map((e) => {
+      const collection = e.node;
+      collection.products.edges = collection.products.edges.filter(
+        (productEdge) => productEdge.node.availableForSale
+      );
+      return collection;
+    });
   } catch (error) {
     console.error('Error in getCollections:', error);
     return [];
@@ -109,6 +116,11 @@ export async function getCollection(handle: string): Promise<Collection | undefi
       variables: { handle },
     });
 
+    if (res.collection) {
+      res.collection.products.edges = res.collection.products.edges.filter(
+        (productEdge) => productEdge.node.availableForSale
+      );
+    }
     return res.collection;
   } catch (error) {
     console.error('Error in getCollection:', error);

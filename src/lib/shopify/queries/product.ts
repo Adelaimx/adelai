@@ -6,6 +6,7 @@ const productFragment = `
     id
     handle
     title
+    availableForSale
     description
     descriptionHtml
     productType
@@ -75,7 +76,9 @@ export async function getProducts({
       tags: ['products'] // Next.js Cache Tag
     });
 
-    return res.products.edges.map(edge => edge.node);
+    return res.products.edges
+      .map(edge => edge.node)
+      .filter(product => product.availableForSale);
   } catch (error) {
     console.error('Error in getProducts:', error);
     return [];
@@ -99,6 +102,9 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
       tags: ['products'] // Next.js Cache Tag
     });
 
+    if (res.product && !res.product.availableForSale) {
+      return undefined;
+    }
     return res.product || undefined;
   } catch (error) {
     console.error('Error in getProduct:', error);
