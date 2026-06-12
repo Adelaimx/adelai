@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollClient';
 
 export default function NosotrosPage() {
   return (
@@ -21,6 +22,9 @@ export default function NosotrosPage() {
           <div className="w-16 h-[1px] bg-white mx-auto mt-8"></div>
         </div>
       </section>
+
+      {/* Star Wars Text Scroll Animation */}
+      <NosotrosStoryScrollClient />
 
       {/* Story Section */}
       <section className="max-w-7xl mx-auto px-6 py-32">
@@ -46,10 +50,15 @@ export default function NosotrosPage() {
             </h3>
             <div className="space-y-6 text-[#8a8786] dark:text-primary-300 leading-relaxed text-lg font-light">
               <p>
-                Fundada bajo la premisa de que la joyería debe ser una extensión
-                del ser, ADELAI nace para redefinir el lujo cotidiano. Cada
-                pieza es un testimonio de nuestra dedicación a la excelencia
-                técnica y la visión artística.
+                ADELAI es una marca de joyería pensada para acompañarte todos
+                los días, creemos en la belleza de lo simple, en los detalles
+                que elevan y en piezas que se sienten tan naturales como tú.
+                Cada diseño combina elegancia atemporal con estilo moderno y
+                minimalista, creando joyas versátiles que puedes usar desde lo
+                cotidiano hasta lo especial. Son piezas que no buscan llamar la
+                atención.... pero la atraen. Más que accesorios, son pequeños
+                recordatorios de lo especial que eres, incluso en los días más
+                simples. ADELAI - Everything Shine
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6">

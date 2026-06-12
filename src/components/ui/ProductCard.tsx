@@ -138,34 +138,65 @@ export function ProductCard({ product, priority = false, forceAddMode = "Añadir
         
         {/* Dynamic Color Variants (Metafields) */}
         <div className="mt-auto pt-2 z-10">
-          {variants.length > 1 && (
-            <div className="flex gap-2">
-              {variants.map((variant, idx) => {
-                const colorName = variant.selectedOptions.find(o => o.name === "Color")?.value || "Color";
-                const id = colorName.toLowerCase();
-                let hex = variant.colorHex?.value || "#cccccc";
-
-                if (id === 'dorado' || id === 'oro') {
-                  hex = '#D4AF37';
-                } else if (id === 'bicolor' || id === 'bi color') {
-                  hex = 'linear-gradient(135deg, #D4AF37 50%, #C0C0C0 50%)';
-                } else if (id === 'multi color') {
-                  hex = 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 25%, #a1c4fd 50%, #c2e9fb 75%, #fbc2eb 100%)';
+          {(() => {
+            // Group variants by color to avoid duplicates (e.g., when size variants exist)
+            const colorGroups = new Map();
+            
+            variants.forEach((variant, idx) => {
+              const colorOption = variant.selectedOptions.find(o => o.name === "Color");
+              if (colorOption) {
+                const colorName = colorOption.value;
+                if (!colorGroups.has(colorName)) {
+                  colorGroups.set(colorName, {
+                    name: colorName,
+                    hex: variant.colorHex?.value,
+                    variantIndex: idx,
+                    id: variant.id
+                  });
                 }
-                
-                return (
-                  <button 
-                    key={variant.id}
-                    onClick={(e) => handleVariantChange(e, idx)}
-                    style={{ background: hex }}
-                    className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${idx === activeVariantIndex ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
-                    aria-label={`Seleccionar color ${colorName} para ${product.title}`}
-                    title={colorName}
-                  />
-                );
-              })}
-            </div>
-          )}
+              }
+            });
+
+            const uniqueColors = Array.from(colorGroups.values());
+
+            if (uniqueColors.length <= 1) return null;
+
+            return (
+              <div className="flex gap-2">
+                {uniqueColors.map((color) => {
+                  const id = color.name.toLowerCase();
+                  let hex = color.hex || "#cccccc";
+
+                  if (id === 'dorado' || id === 'oro') {
+                    hex = '#D4AF37';
+                  } else if (id === 'bicolor' || id === 'bi color') {
+                    hex = 'linear-gradient(135deg, #D4AF37 50%, #C0C0C0 50%)';
+                  } else if (id === 'multi color') {
+                    hex = 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 25%, #a1c4fd 50%, #c2e9fb 75%, #fbc2eb 100%)';
+                  } else if (id === 'plata') {
+                    hex = '#C0C0C0';
+                  } else if (id === 'rose gold' || id === 'oro rosa') {
+                    hex = '#B76E79';
+                  }
+                  
+                  // Check if the currently active variant matches this color
+                  const activeColorOption = activeVariant?.selectedOptions.find(o => o.name === "Color");
+                  const isActive = activeColorOption?.value === color.name;
+
+                  return (
+                    <button 
+                      key={color.id}
+                      onClick={(e) => handleVariantChange(e, color.variantIndex)}
+                      style={{ background: hex }}
+                      className={`w-4 h-4 rounded-full transition-transform hover:scale-110 cursor-pointer ${isActive ? 'ring-1 ring-offset-2 ring-primary/40' : 'border border-gray-200'}`}
+                      aria-label={`Seleccionar color ${color.name} para ${product.title}`}
+                      title={color.name}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       </div>
     </div>

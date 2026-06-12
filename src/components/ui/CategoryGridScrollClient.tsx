@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const categories = [
+const DEFAULT_CATEGORIES = [
   {
     tag: 'Anillos',
     link: '/categoria/anillos',
@@ -34,7 +34,15 @@ const categories = [
   },
 ];
 
-export function CategoryGridScrollClient() {
+interface CategoryGridScrollClientProps {
+  categories?: {
+    tag: string;
+    link: string;
+    img: string;
+  }[];
+}
+
+export function CategoryGridScrollClient({ categories = DEFAULT_CATEGORIES }: CategoryGridScrollClientProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const anillosRef = useRef<HTMLDivElement>(null);
   const aretesRef = useRef<HTMLDivElement>(null);

@@ -3,7 +3,7 @@
 import { ProductCard } from '@/components/ui/ProductCard';
 import { Product } from '@/lib/shopify/types';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState, useEffect, useRef } from 'react';
 import { categorizeSize, getProductCategory } from '@/lib/utils/categorizeSize';
 
 interface ProductGridProps {
@@ -27,6 +27,18 @@ export function ProductGrid({ products }: ProductGridProps) {
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    if (gridRef.current) {
+      // 80px navbar + 20px padding
+      const y = gridRef.current.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   // Reset page when filters change
   useEffect(() => {
@@ -168,7 +180,7 @@ export function ProductGrid({ products }: ProductGridProps) {
   return (
     <main className="flex-1 px-6 py-12 lg:px-12">
       {/* Controls */}
-      <div className="mb-10 flex flex-wrap items-center justify-end gap-4 border-b border-primary-100 pb-4">
+      <div ref={gridRef} className="mb-10 flex flex-wrap items-center justify-end gap-4 border-b border-primary-100 pb-4">
         <div className="flex items-center gap-3">
           <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
             ORDENAR POR:
@@ -216,7 +228,7 @@ export function ProductGrid({ products }: ProductGridProps) {
       {totalPages > 1 && (
         <div className="mt-20 flex items-center justify-center gap-2">
           <button
-            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
             className="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-400 hover:bg-slate-50 transition-colors disabled:opacity-50"
           >
@@ -230,7 +242,7 @@ export function ProductGrid({ products }: ProductGridProps) {
             return (
               <button
                 key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
+                onClick={() => handlePageChange(pageNum)}
                 className={`flex h-10 w-10 items-center justify-center rounded-sm text-[11px] font-bold transition-colors ${
                   currentPage === pageNum
                     ? 'bg-primary text-white border border-primary'
@@ -243,9 +255,7 @@ export function ProductGrid({ products }: ProductGridProps) {
           })}
 
           <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(totalPages, prev + 1))
-            }
+            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
             className="flex h-10 w-10 items-center justify-center rounded-sm border border-slate-200 text-slate-400 hover:bg-slate-50 transition-colors disabled:opacity-50"
           >
