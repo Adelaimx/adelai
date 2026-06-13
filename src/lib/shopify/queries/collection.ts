@@ -85,6 +85,7 @@ export async function getCollections(query?: string): Promise<Collection[]> {
     const res = await shopifyFetch<{ collections: Connection<Collection> }>({
       query: q,
       variables: { query },
+      tags: ['collections'], // Add Next.js cache tag
     });
 
     return res.collections.edges.map((e) => {
@@ -114,6 +115,7 @@ export async function getCollection(handle: string): Promise<Collection | undefi
     const res = await shopifyFetch<{ collection: Collection }>({
       query,
       variables: { handle },
+      tags: ['collections'], // Add Next.js cache tag
     });
 
     if (res.collection) {

@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollClient';
+import { NosotrosContactForm } from '@/components/ui/NosotrosContactForm';
 
 export default function NosotrosPage() {
+  const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN || 'adelai-3.myshopify.com';
+
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">
       {/* Hero Section */}
@@ -100,51 +103,7 @@ export default function NosotrosPage() {
             para atenderte.
           </p>
 
-          <form className="space-y-6 text-left bg-white dark:bg-background-dark p-8 md:p-12 rounded-xl shadow-sm border border-primary/10">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">
-                  Nombre
-                </label>
-                <input
-                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-primary"
-                  placeholder="Tu nombre"
-                  type="text"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-stale-300">
-                  Email
-                </label>
-                <input
-                  className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 dark:text-primary"
-                  placeholder="hola@ejemplo.com"
-                  type="email"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest font-bold text-slate-700 dark:text-slate-300">
-                Mensaje
-              </label>
-              <textarea
-                className="w-full border-0 border-b border-primary/20 bg-transparent py-3 focus:ring-0 focus:outline-none focus:border-primary transition-colors placeholder:text-slate-400 resize-none dark:text-primary"
-                placeholder="¿En qué podemos ayudarte?"
-                rows={4}
-              ></textarea>
-            </div>
-
-            <div className="pt-6">
-              <button
-                className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-primary/90 transition-all tracking-widest uppercase text-sm cursor-pointer"
-                type="button"
-              >
-                Enviar Mensaje
-              </button>
-            </div>
-          </form>
+          <NosotrosContactForm />
         </div>
       </section>
     </div>
