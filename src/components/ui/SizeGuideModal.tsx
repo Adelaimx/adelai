@@ -282,34 +282,47 @@ export function SizeGuideModal({
 
               {category === 'BRAZALETES' && (
                 <svg
-                  viewBox="0 0 200 150"
-                  className="w-full max-w-[160px] text-secondary/40"
+                  viewBox="0 0 150 250"
+                  className="w-full max-w-[130px] text-secondary/40"
                 >
-                  {/* Wrist Silhouette */}
+                  {/* Elegant Hand Silhouette */}
                   <path
-                    d="M20,150 C30,110 40,80 100,80 C160,80 170,110 180,150"
+                    d="M40,250 
+                       C50,200 55,170 55,150 
+                       C40,140 30,115 35,100 
+                       C40,85 50,100 55,115 
+                       C55,80 55,40 65,40 
+                       C72,40 75,60 75,100 
+                       C75,60 80,30 90,30 
+                       C100,30 100,50 100,90 
+                       C100,70 105,55 115,55 
+                       C125,55 125,90 115,120 
+                       C105,140 95,150 95,150 
+                       C95,170 100,200 110,250"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
+                  {/* Wrist crease */}
                   <path
-                    d="M40,150 C45,120 60,100 100,100 C140,100 155,120 160,150"
+                    d="M60,155 Q75,162 90,155"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="1"
                     strokeLinecap="round"
                   />
                   {/* Bracelet Visualization */}
                   <path
-                    d="M35,125 C60,120 140,120 165,125"
+                    d="M48,185 Q75,195 102,185"
                     fill="none"
                     stroke="#D4AF37"
                     strokeWidth={
                       info.semanticSize === 'Statement'
-                        ? 8
+                        ? 10
                         : info.semanticSize === 'Clásico'
-                          ? 4
+                          ? 5
                           : 2
                     }
                     strokeLinecap="round"

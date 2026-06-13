@@ -7,7 +7,11 @@ import { CartSheet } from "./CartSheet";
 import { useCart } from "@/contexts/CartContext";
 import { MobileMenuDrawer } from "./MobileMenuDrawer";
 
-export function Navbar() {
+interface NavbarProps {
+  shopifyDomain?: string;
+}
+
+export function Navbar({ shopifyDomain = 'adelai-3.myshopify.com' }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { setIsCartOpen, cartCount } = useCart();
   const pathname = usePathname();
@@ -69,18 +73,32 @@ export function Navbar() {
             <Link className={getLinkClasses("/categoria/anillos")} href="/categoria/anillos">anillos</Link>
             <Link className={getLinkClasses("/best-sellers", true)} href="/best-sellers">BEST SELLERS</Link>
           </nav>
-          <button 
-            onClick={() => setIsCartOpen(true)} 
-            className="p-2 hover:bg-gold/10 rounded-full transition-colors flex items-center justify-center relative text-gold"
-            aria-label={`Ver carrito, ${cartCount} productos`}
-          >
-            <span className="material-symbols-outlined">shopping_bag</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-gold text-primary text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-sm">
-                {cartCount}
-              </span>
-            )}
-          </button>
+          
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* User Profile / Account Link */}
+            <a 
+              href={`https://${shopifyDomain}/account`}
+              className="p-2 hover:bg-gold/10 rounded-full transition-colors flex items-center justify-center relative text-gold"
+              aria-label="Mi Cuenta / Pedidos"
+              title="Mi Cuenta / Pedidos"
+            >
+              <span className="material-symbols-outlined">person</span>
+            </a>
+
+            {/* Cart Button */}
+            <button 
+              onClick={() => setIsCartOpen(true)} 
+              className="p-2 hover:bg-gold/10 rounded-full transition-colors flex items-center justify-center relative text-gold"
+              aria-label={`Ver carrito, ${cartCount} productos`}
+            >
+              <span className="material-symbols-outlined">shopping_bag</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gold text-primary text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 

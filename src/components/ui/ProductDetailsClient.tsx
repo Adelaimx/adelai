@@ -41,14 +41,20 @@ export function ProductDetailsClient({
 
         if (!options.has(id)) {
           let hex = v.colorHex?.value || '#cccccc';
+
           if (id === 'dorado' || id === 'oro') {
             hex = '#D4AF37';
-          } else if (id === 'bicolor') {
+          } else if (id === 'bicolor' || id === 'bi color') {
             hex = 'linear-gradient(135deg, #D4AF37 50%, #C0C0C0 50%)';
           } else if (id === 'multicolor' || id === 'multi color') {
             hex =
               'linear-gradient(45deg, #ff9a9e 0%, #fecfef 25%, #a1c4fd 50%, #c2e9fb 75%, #fbc2eb 100%)';
+          } else if (id === 'plata') {
+            hex = '#C0C0C0';
+          } else if (id === 'rose gold' || id === 'oro rosa') {
+            hex = '#B76E79';
           }
+
           options.set(id, hex);
           labels.set(id, label);
         }
@@ -69,6 +75,33 @@ export function ProductDetailsClient({
 
   const [isAnimatingTab, setIsAnimatingTab] = useState(false);
   const tabContentRef = useRef<HTMLDivElement>(null);
+  const addToCartBtnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!addToCartBtnRef.current) return;
+
+    // Create a bell-ring (campaneo) animation that repeats every 6 seconds
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 6 });
+
+    gsap.set(addToCartBtnRef.current, { transformOrigin: 'center top' });
+
+    tl.to(addToCartBtnRef.current, {
+      keyframes: [
+        { rotation: 12, duration: 0.1 },
+        { rotation: -10, duration: 0.1 },
+        { rotation: 8, duration: 0.1 },
+        { rotation: -6, duration: 0.1 },
+        { rotation: 4, duration: 0.1 },
+        { rotation: -2, duration: 0.1 },
+        { rotation: 0, duration: 0.1 },
+      ],
+      ease: 'power1.inOut',
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
   const handleTabChange = (newTab: 'specs' | 'care') => {
     if (newTab === activeTab || isAnimatingTab) return;
@@ -138,6 +171,17 @@ export function ProductDetailsClient({
     }
   }, [availableSizes, activeSize]);
 
+  // Mobile related products carousel state
+  const [activeRelatedIndex, setActiveRelatedIndex] = useState(0);
+
+  useEffect(() => {
+    if (relatedProducts.length <= 1) return;
+    const interval = setInterval(() => {
+      setActiveRelatedIndex((prev) => (prev + 1) % relatedProducts.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [relatedProducts.length]);
+
   // Find exact active variant
   const activeVariant =
     variants.find((v) => {
@@ -160,6 +204,11 @@ export function ProductDetailsClient({
     ? parseFloat(activeVariant.compareAtPrice.amount)
     : null;
   const stockQuantity = activeVariant?.quantityAvailable || 0;
+
+  // Reset quantity when variant changes
+  useEffect(() => {
+    setQuantity(1);
+  }, [activeVariant?.id]);
 
   const materialOption = product.options.find((o) =>
     o.name.toLowerCase().includes('material'),
@@ -208,9 +257,7 @@ export function ProductDetailsClient({
         <span className="text-secondary/60 material-symbols-outlined text-xs">
           chevron_right
         </span>
-        <span className="text-secondary font-medium">
-          {product.title}
-        </span>
+        <span className="text-secondary font-medium">{product.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -353,9 +400,9 @@ export function ProductDetailsClient({
           {colorOptions.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold uppercase tracking-widest text-secondary">
+                <span className="text-sm font-bold uppercase tracking-widest text-secondary ">
                   Color:{' '}
-                  <span className="text-slate-900 dark:text-slate-100">
+                  <span className="text-slate-900 dark:text-primary-100">
                     {colorOptions.find((c) => c.id === activeColorId)?.label ||
                       activeColorId}
                   </span>
@@ -417,19 +464,23 @@ export function ProductDetailsClient({
               <div className="flex justify-between items-center border border-primary/30 rounded px-2 bg-white h-14 md:h-12 w-full max-w-[200px] md:w-auto shrink-0 transition-colors hover:border-primary">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 text-primary hover:bg-primary/10 rounded-full h-10 w-10 flex items-center justify-center font-medium"
+                  disabled={quantity <= 1 || stockQuantity === 0}
+                  className="px-4 text-primary hover:bg-primary/10 disabled:opacity-30 disabled:hover:bg-transparent rounded-full h-10 w-10 flex items-center justify-center font-medium"
                 >
                   -
                 </button>
                 <input
-                  className="w-12 text-center border-none focus:ring-0 bg-transparent font-bold text-slate-900 dark:text-slate-100 p-0"
+                  className="w-12 text-center border-none focus:ring-0 bg-transparent font-bold text-slate-900 dark:text-primary-100 p-0"
                   readOnly
                   type="number"
-                  value={quantity}
+                  value={stockQuantity === 0 ? 0 : quantity}
                 />
                 <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 text-primary hover:bg-primary/10 rounded-full h-10 w-10 flex items-center justify-center font-medium"
+                  onClick={() =>
+                    setQuantity(Math.min(stockQuantity, quantity + 1))
+                  }
+                  disabled={quantity >= stockQuantity || stockQuantity === 0}
+                  className="px-4 text-primary hover:bg-primary/10 disabled:opacity-30 disabled:hover:bg-transparent rounded-full h-10 w-10 flex items-center justify-center font-medium"
                 >
                   +
                 </button>
@@ -437,11 +488,17 @@ export function ProductDetailsClient({
 
               {/* Add to Cart Button */}
               <button
+                ref={addToCartBtnRef}
                 onClick={handleAddToCart}
-                className="btn-primary w-full md:w-auto md:flex-1 h-14 md:h-12 shadow-lg shadow-primary/20"
+                disabled={stockQuantity === 0}
+                className="btn-primary w-full md:w-auto md:flex-1 h-14 md:h-12 shadow-lg shadow-primary/20 hover:bg-primary/90 disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none disabled:cursor-not-allowed hover:cursor-pointer"
               >
-                <span className="material-symbols-outlined">shopping_bag</span>
-                Añadir al carrito
+                <span className="material-symbols-outlined">
+                  {stockQuantity === 0
+                    ? 'remove_shopping_cart'
+                    : 'shopping_bag'}
+                </span>
+                {stockQuantity === 0 ? 'Agotado' : 'Añadir al carrito'}
               </button>
             </div>
           </div>
@@ -466,7 +523,7 @@ export function ProductDetailsClient({
               <div>
                 <p className="text-sm font-bold">Garantía de Satisfacción</p>
                 <p className="text-xs text-secondary">
-                  30 días para cambios y devoluciones sin costo.
+                  7 días para cambios y devoluciones sin costo.
                 </p>
               </div>
             </div>
@@ -495,7 +552,7 @@ export function ProductDetailsClient({
           {activeTab === 'specs' ? (
             <div className="grid md:grid-cols-2 gap-10 p-4 sm:p-6 md:p-8 rounded-xl bg-white border border-primary/10">
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-primary-100">
                   Detalles Técnicos
                 </h3>
                 <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
@@ -580,20 +637,57 @@ export function ProductDetailsClient({
 
       {/* Related Products Section */}
       {relatedProducts.length > 0 && (
-        <section className="mt-20 bg-white py-12 px-6 rounded-xl border border-primary/10">
-          <h2 className="text-2xl font-bold mb-8 text-primary">
-            Productos Relacionados
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {relatedProducts.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                forceAddMode="AÑADIR AL CARRITO"
-              />
-            ))}
-          </div>
-        </section>
+        <div className="mt-20 relative p-[2px] rounded-xl overflow-hidden shadow-sm">
+          {/* Animated golden light border */}
+          <div className="absolute top-1/2 left-1/2 w-[200%] h-[200%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#D4AF37_100%)] animate-[spin_3s_ease-in-out_infinite]" />
+
+          <section className="relative bg-white py-12 px-6 rounded-[10px] z-10 w-full h-full">
+            <h2 className="text-2xl font-bold mb-8 text-primary">
+              Productos Relacionados
+            </h2>
+
+            {/* Desktop View: Grid */}
+            <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-4 gap-6 ">
+              {relatedProducts.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  forceAddMode="AÑADIR AL CARRITO"
+                />
+              ))}
+            </div>
+
+            {/* Mobile View: Carousel */}
+            <div className="sm:hidden relative overflow-hidden w-full">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${activeRelatedIndex * 100}%)`,
+                }}
+              >
+                {relatedProducts.map((p) => (
+                  <div key={p.id} className="w-full flex-shrink-0 px-2">
+                    <ProductCard product={p} forceAddMode="AÑADIR AL CARRITO" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Carousel Indicators */}
+              {relatedProducts.length > 1 && (
+                <div className="flex justify-center gap-2 mt-6">
+                  {relatedProducts.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveRelatedIndex(idx)}
+                      className={`w-2 h-2 rounded-full transition-colors ${idx === activeRelatedIndex ? 'bg-[#D4AF37]' : 'bg-[#D4AF37]/20'}`}
+                      aria-label={`Ir al producto ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
       )}
       <SizeGuideModal
         isOpen={isSizeGuideOpen}

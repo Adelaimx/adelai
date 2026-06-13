@@ -124,10 +124,15 @@ export async function getCart(cartId: string): Promise<Cart | undefined> {
     ${cartFragment}
   `;
 
-  const res = await shopifyFetch<{ cart: Cart }>({
-    query,
-    variables: { cartId },
-    cache: 'no-store'
-  });
-  return res.cart;
+  try {
+    const res = await shopifyFetch<{ cart: Cart }>({
+      query,
+      variables: { cartId },
+      cache: 'no-store'
+    });
+    return res.cart;
+  } catch (error) {
+    console.error('Error in getCart:', error);
+    return undefined;
+  }
 }

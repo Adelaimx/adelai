@@ -1,8 +1,19 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { TransitionLink as Link } from '@/components/ui/TransitionLink';
+
+const CAROUSEL_IMAGES = [
+  '/Fotos_destacadas/3_.avif',
+  '/Fotos_destacadas/IMG_8680_VSCO.avif',
+  '/Fotos_destacadas/IMG_8683_VSCO.avif',
+  '/Fotos_destacadas/IMG_8684_VSCO.avif',
+  '/Fotos_destacadas/IMG_8734_VSCO.avif',
+  '/Fotos_destacadas/IMG_8737_VSCO.avif',
+  '/Fotos_destacadas/IMG_9191.avif',
+  '/Fotos_destacadas/IMG_9193.avif',
+];
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -24,6 +35,18 @@ export function HeroScrollClient({
   const bgRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const promoRef = useRef<HTMLElement>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 5000); // 5 seconds per slide
+    return () => clearInterval(timer);
+  }, []);
+
+  const slidingIndices = [currentIndex - 1, currentIndex, currentIndex + 1];
+  const getMod = (n: number, m: number) => ((n % m) + m) % m;
 
   useGSAP(() => {
     // 1. Pin the background while we scroll past the hero
@@ -50,6 +73,12 @@ export function HeroScrollClient({
 
   return (
     <div className="relative w-full -mt-20">
+      <style>{`
+        @keyframes progress-bar {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}</style>
       {/* 1. Hero Container (100vh) */}
       <div
         ref={containerRef}
@@ -58,30 +87,70 @@ export function HeroScrollClient({
         {/* Pinned Background with Two Images */}
         <div
           ref={bgRef}
-          className="absolute inset-0 w-full h-full z-0 flex flex-col md:flex-row"
+          className="absolute inset-0 w-full h-full z-0 flex flex-col md:flex-row bg-[#b3a496]/20"
         >
           <div className="absolute inset-0 hero-gradient z-10 pointer-events-none"></div>
 
+          {/* Left Column (Transitions UP) */}
           <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-hidden relative">
-            <Image
-              fill
-              className="object-cover"
-              alt="Colección ADELAI Joyería Minimalista - Modelo elegante con collar"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCToxH35ucCQhFBR_r_PVV4aM-nURecRbVk4ZUm_JB4NiuQVinUKPs49dhFR1TnuSCvL8WTuD05yW7NNqb7vGc-3NLTnJiRnGHUMLTkVO5RBq2lsYzpRr9gZlKntYeFbBfwJZEPo6e1iixjChM_pHc6xm8riwW5pfSf3_ECxymmYLXLkM_9V5J3RJy4ZSiACUQ4fFT9otH5rPoKRjcNsn9Ad64Rq4s4ssnpKHAOjfyylEAJ3L9MJWsHiN6uQ0CPrWMoIaOWzEqqrMg"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+            {slidingIndices.map((slideIndex) => {
+              const imageIndex = getMod(slideIndex, CAROUSEL_IMAGES.length);
+              const src = CAROUSEL_IMAGES[imageIndex];
+              const offset = slideIndex - currentIndex;
+
+              return (
+                <div
+                  key={`left-${slideIndex}`}
+                  className="absolute inset-0 transition-transform"
+                  style={{
+                    transform: `translateY(${offset * 100}%)`,
+                    transitionDuration: '1.2s',
+                    transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+                  }}
+                >
+                  <Image
+                    fill
+                    className="object-cover"
+                    alt={`Colección ADELAI Joyería Minimalista - ${imageIndex}`}
+                    src={src}
+                    priority={slideIndex >= -1 && slideIndex <= 1}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    unoptimized
+                  />
+                </div>
+              );
+            })}
           </div>
 
+          {/* Right Column (Transitions DOWN) */}
           <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-hidden relative">
-            <Image
-              fill
-              className="object-cover"
-              alt="Detalle de Joyería ADELAI - Pendientes de oro en primer plano"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1_lj_a6B6k-Jg32qXpsslhM46PNKs4A68vrQKyi9b8aQDfqtZtTfX_h3uaEuZhq4ghJ1apum2ZwFbEKFLtZOPedpvypnQLwCKIh6Z4XJB203XAXeFAMBD2RGeF4IJdvG9njtAUjlMnlyW13FJ9rJU_-UrjCptFoi4E3nO_Kf_sGi0A-gMeaoGrSaxy4z7Dd_656W9PCmO5Dmx1dAf4m_LyrSkuj-EFDxg5g4ykpcLRBMFuFTFEUoo_DRJblKRfiO4kvrsbKev2fM"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+            {slidingIndices.map((slideIndex) => {
+              const imageIndex = getMod(slideIndex + 1, CAROUSEL_IMAGES.length);
+              const src = CAROUSEL_IMAGES[imageIndex];
+              const offset = slideIndex - currentIndex;
+
+              return (
+                <div
+                  key={`right-${slideIndex}`}
+                  className="absolute inset-0 transition-transform"
+                  style={{
+                    transform: `translateY(${-offset * 100}%)`,
+                    transitionDuration: '1.2s',
+                    transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+                  }}
+                >
+                  <Image
+                    fill
+                    className="object-cover"
+                    alt={`Detalle de Joyería ADELAI - ${imageIndex}`}
+                    src={src}
+                    priority={slideIndex >= -1 && slideIndex <= 1}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    unoptimized
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -96,20 +165,29 @@ export function HeroScrollClient({
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-white tracking-tighter mb-6 uppercase drop-shadow-lg">
             Nueva Colección
           </h1>
+
+          {/* Progress Bar */}
+          <div className="w-48 md:w-64 h-1 bg-white/30 rounded-full overflow-hidden mt-2 relative pointer-events-auto">
+            <div
+              key={currentIndex}
+              className="absolute top-0 left-0 h-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+              style={{ animation: 'progress-bar 5s linear forwards' }}
+            />
+          </div>
         </div>
       </div>
 
       {/* 2. Promo Section (Naturally flows over the pinned hero background) */}
-      <section className="relative w-full bg-[#b3a496] z-30 border-b border-primary/10 flex flex-col justify-center overflow-hidden">
+      <section className="relative w-full min-h-screen bg-[#b3a496] z-30 border-b border-primary/10 flex flex-col justify-center overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-64 h-64 border border-white/20 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] border border-white/10 rounded-full translate-x-1/3 translate-y-1/3"></div>
         <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-white/60 rounded-full blur-[1px]"></div>
         <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-white/40 rounded-full blur-[1px]"></div>
 
-        <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+        <div className="w-full flex flex-col md:flex-row min-h-screen">
           {/* Left: Joyero Image Placeholder / Dynamic */}
-          <div className="w-full md:w-1/2 flex justify-center relative z-10">
+          <div className="w-full md:w-1/2 flex justify-center items-center relative z-10 p-6 md:p-12 lg:p-20">
             {/* Floating Sparkles */}
             <div className="absolute top-4 left-10 md:left-20 text-white opacity-80 animate-pulse drop-shadow-md z-20">
               <svg
@@ -143,9 +221,9 @@ export function HeroScrollClient({
             </div>
 
             {/* The circle behind the image */}
-            <div className="absolute inset-0 m-auto w-64 h-64 md:w-80 md:h-80 border border-white/30 rounded-full -z-10"></div>
+            <div className="absolute inset-0 m-auto w-[80%] aspect-square max-w-[600px] border border-white/30 rounded-full -z-10"></div>
 
-            <div className="relative w-full max-w-lg aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl group z-10">
+            <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl group z-10">
               <Image
                 src={
                   regaloProduct?.featuredImage?.url ||
@@ -159,7 +237,7 @@ export function HeroScrollClient({
           </div>
 
           {/* Right: Text and Promos */}
-          <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left text-white relative z-10">
+          <div className="w-full md:w-1/2 flex flex-col items-center md:items-start justify-center text-center md:text-left text-white relative z-10 p-6 md:p-12 lg:p-24">
             <span className="material-symbols-outlined text-4xl mb-4 opacity-90 mx-auto md:mx-0">
               featured_seasonal_and_gifts
             </span>

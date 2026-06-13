@@ -31,19 +31,58 @@ export default async function Home() {
   );
   const regaloProduct = regalosExclusivosCollection?.products.edges[0]?.node;
 
+  // Find multiple images for the 4 categories to avoid repetition
+  const findImages = (keyword: string, fallback: string) => {
+    const products = allProducts.filter(p => 
+      p.title.toLowerCase().includes(keyword) || 
+      p.tags?.some(t => t.toLowerCase().includes(keyword))
+    );
+    const urls = products.map(p => p.featuredImage?.url).filter(Boolean);
+    return {
+      img1: urls[0] || fallback,
+      img2: urls[1] || urls[0] || fallback
+    };
+  };
+
+  const anillosImgs = findImages('anillo', 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop');
+  const aretesImgs = findImages('arete', 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop');
+  const collaresImgs = findImages('collar', 'https://images.unsplash.com/photo-1599643478514-4a4e0f04c6b1?q=80&w=800&auto=format&fit=crop');
+  const pulserasImgs = findImages('pulsera', 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop');
+
   return (
     <div className="relative flex flex-col pt-0 transition-colors duration-300">
       {/* 1. Hero Section */}
-      <HeroScrollClient 
-        regaloProduct={regaloProduct} 
-        regalosExclusivosCollection={regalosExclusivosCollection} 
+      <HeroScrollClient
+        regaloProduct={regaloProduct}
+        regalosExclusivosCollection={regalosExclusivosCollection}
       />
 
       {/* 2. Info Section */}
       <InfoScrollClient />
 
       {/* 3. Shop by Category (Responsive Grid / Deck of Cards GSAP) */}
-      <CategoryGridScrollClient />
+      <CategoryGridScrollClient categories={[
+        {
+          img: anillosImgs.img1,
+          tag: 'Anillos',
+          link: '/categoria/anillos',
+        },
+        {
+          img: aretesImgs.img1,
+          tag: 'Aretes',
+          link: '/categoria/aretes',
+        },
+        {
+          img: collaresImgs.img1,
+          tag: 'Collares',
+          link: '/categoria/collares',
+        },
+        {
+          img: pulserasImgs.img1,
+          tag: 'Pulseras',
+          link: '/categoria/brazaletes',
+        },
+      ]} />
 
       {/* 4. Best Sellers Carousel */}
       <section className="py-24 bg-white dark:bg-background-dark overflow-hidden">
@@ -64,53 +103,54 @@ export default async function Home() {
       )}
 
       {/* 6. Featured Products & Grid Section */}
-      <section className="py-0 border-y border-primary/10">
+      <section className="featured_Products py-0 border-y border-primary/10">
         <div className="flex flex-col md:flex-row min-h-[600px]">
-          {/* Left Column: Nuevos Productos */}
-          <div className="w-full md:w-1/2 relative group overflow-hidden h-96 md:h-[600px]">
+          {/* Left Column: Joyeros */}
+          <Link href="/categoria/joyeros" className="w-full md:w-1/2 relative group overflow-hidden h-96 md:h-[600px] block">
             <Image
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuUFauSEKOFmIaXHmoyHGebNyioRSRkEunQHQFcdAp4tRH_swD6cT6UF2O_z7pqP07G-Zt5SOPZYdBC6tGjtiojiWZvT943Z9UpLhwWdyvDVehC6ZAVhl98mlm8pyHFcepHMRE2FQVzoaIbaoU0WkMQM1cwI6gs79bc0p2Tr3shT1d4Q6skfjo25nSGlKxxHFqAuPFsF76jaGG7WaV81HQb_LVBp_37vIj--NqoResi46_OyGeZ6_sZ2flTTrGs3F2HGw1AoLtbUA"
-              alt="Nuevos lanzamientos de joyería minimalista ADELAI"
+              src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=800&auto=format&fit=crop"
+              alt="Joyeros elegantes ADELAI"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center pointer-events-none">
-              <div className="text-center px-6 pointer-events-auto">
-                <h2 className="font-serif text-4xl md:text-5xl text-white tracking-wider mb-6">
-                  NUEVOS PRODUCTOS
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+              <div className="text-center px-6">
+                <h2 className="font-serif text-4xl md:text-5xl text-white tracking-wider mb-6 drop-shadow-md">
+                  JOYEROS
                 </h2>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Right Column: 2x2 Grid */}
           <div className="w-full md:w-1/2 relative h-[600px] flex flex-col">
             <div className="grid grid-cols-2 grid-rows-2 h-full w-full">
               {[
                 {
-                  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjejwGCrsFyxcMBreFpu--CS9ksbDy0B-XrCNmDYjtB-19eMKyszPhKbf0I6tT3aSBicoHl-p6ezELMH0P3_xvtk2bzQD3jnRnM5dwIQahidt_Jy4Oc-WLWGdykNfMTFwuc3zEdsQKRhckJYuEEg37yaPiXweVTLIXi643vtTgWemDiWFJ64tIl-FqS8FjMjmunnmOtJ6c9ZFjY01tNPkAi_IT2No25-pLsvvn-dUfZSTllO6W2_U5aFzVdnTsKEq-WzOtpnLt9g4',
+                  img: anillosImgs.img2,
                   tag: 'Anillos',
                   link: '/categoria/anillos',
                 },
                 {
-                  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMAUlmMFtrDmUwIiFDCRWKlcJP0aDcKrS6073XU8y4SFsc_lejeLGhG_u4zw1rrcuxnZ9rBeJ0sAmtTJDjBqjTDHvu-RSpIAGO1hLS0E8t7LAXXih_tUuTLuTsE2O7ILyyYraSnj6JlN84mkQ0NwDpDJs3YFo7iBduqGXoMhPPLMnLQUXTgBj-j1BhN1AvIY_FenvhOiLneKVY6zWMlpaIKUC6QInq2J6kdKNfIyhVAs',
+                  img: aretesImgs.img2,
                   tag: 'Aretes',
                   link: '/categoria/aretes',
                 },
                 {
-                  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDWv-8_OpdjyYjpZYoQw5H88KKjED3e06v5LfPU22HNLPEGQnrhCF5tr9mRILKNIlBLK3WM2ZMRuZg8BIsouz6IuSTwsMlbT-CqflCbSCxWOyL_LYc3YNjS6aybpsWQBWGakS5Ni8pdlBx9n-PZrflwnD6-SNT61EKQGnqBB8FGEhQNa4VxJUUHUcXsPW9FS_aBQeTtHjFx25aypJHHthsJ1lruEwzYUL9CminsaEs5lx7pKuZM1aZb4IqWPKYBMwsUe7qPsgm-i3k',
+                  img: collaresImgs.img2,
                   tag: 'Collares',
                   link: '/categoria/collares',
                 },
                 {
-                  img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDpLH5HGc1kmArtJ6BJmlS3bw5cpNmRMsgkv2GRxXlwy-_cb07XX7fLTzX__AnK-SI5IOtVmqsBMrVLEfFgIUaFeMJSWTZDAdT3XVta8goLP4KLgKFmxSviKLOtQOehxk8m-v26e5_q7PSDBj9KSF33pAhEXf1DD6e9Q5Rgw3HX56MRMet0wgkuoSNFL7gEMj2SahyFeodgEAcewCal27sKqHzMRoVGNySEGCMUriNIznYg89IL9CFQEpUkqvjkrP9ZMX3lcGRjH1I',
+                  img: pulserasImgs.img2,
                   tag: 'Pulseras',
                   link: '/categoria/brazaletes',
                 },
               ].map((item, idx) => (
-                <div
+                <Link
                   key={idx}
+                  href={item.link}
                   className="relative group overflow-hidden h-full block"
                 >
                   <Image
@@ -127,14 +167,14 @@ export default async function Home() {
                       </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
             {/* Overlaid Block */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
               <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-6 md:p-10 flex flex-col items-center gap-6 pointer-events-auto shadow-2xl rounded-[12px]">
-                <h2 className="font-serif text-xl md:text-3xl text-primary tracking-[0.2em] uppercase text-center">
+                <h2 className="font-serif text-xl md:text-3xl text-white tracking-[0.2em] uppercase text-center">
                   Piezas Destacadas
                 </h2>
               </div>

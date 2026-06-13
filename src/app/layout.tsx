@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navbar } from "@/components/ui/Navbar";
@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   description: "Joyería atemporal para la mujer moderna. Diseñada en España, amada en todo el mundo. Descubre nuestra colección de collares, anillos y aretes en oro de 18k.",
   keywords: ["joyería", "minimalista", "consciente", "españa", "oro 18k", "acero inoxidable", "atemporal"],
   authors: [{ name: "ADELAI Team" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
   openGraph: {
     type: "website",
@@ -42,12 +41,18 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const initialCart = await getCart();
+  const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN || 'adelai-3.myshopify.com';
 
   return (
     <html lang="es" className={`${montserrat.variable} ${carmela.variable} scroll-smooth`}>
@@ -63,7 +68,7 @@ export default async function RootLayout({
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-primary text-white px-4 py-2 rounded-md">
             Saltar al contenido
           </a>
-          <Navbar />
+          <Navbar shopifyDomain={shopifyDomain} />
           <main id="main-content" className="flex-1 mt-20">
             {children}
           </main>
