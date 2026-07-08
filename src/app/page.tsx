@@ -36,23 +36,43 @@ export default async function Home() {
 
   // Find multiple images for the 4 categories to avoid repetition
   const findImages = (keywords: string[], fallback: string) => {
-    const products = allProducts.filter(p => 
-      keywords.some(k => p.title.toLowerCase().includes(k)) || 
-      p.tags?.some(t => keywords.some(k => t.toLowerCase().includes(k))) ||
-      (p.productType && keywords.some(k => p.productType.toLowerCase().includes(k)))
+    const products = allProducts.filter(
+      (p) =>
+        keywords.some((k) => p.title.toLowerCase().includes(k)) ||
+        p.tags?.some((t) =>
+          keywords.some((k) => t.toLowerCase().includes(k)),
+        ) ||
+        (p.productType &&
+          keywords.some((k) => p.productType?.toLowerCase().includes(k))),
     );
-    const urls = products.map(p => p.featuredImage?.url).filter(Boolean);
+    const urls = products.map((p) => p.featuredImage?.url).filter(Boolean);
     return {
       img1: urls[0] || fallback,
-      img2: urls[1] || urls[0] || fallback
+      img2: urls[1] || urls[0] || fallback,
     };
   };
 
-  const anillosImgs = findImages(['anillo', 'ring'], 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop');
-  const aretesImgs = findImages(['arete', 'earring', 'arracada'], 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop');
-  const collaresImgs = findImages(['collar', 'necklace', 'cadena'], 'https://images.unsplash.com/photo-1599643478514-4a4e0f04c6b1?q=80&w=800&auto=format&fit=crop');
-  const pulserasImgs = findImages(['pulsera', 'brazalete', 'bracelet'], 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop');
-  const joyerosImgs = findImages(['joyero', 'jewelry box', 'estuche'], regaloProduct?.featuredImage?.url || 'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=800&auto=format&fit=crop');
+  const anillosImgs = findImages(
+    ['anillo', 'ring'],
+    'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+  );
+  const aretesImgs = findImages(
+    ['arete', 'earring', 'arracada'],
+    'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
+  );
+  const collaresImgs = findImages(
+    ['collar', 'necklace', 'cadena'],
+    'https://images.unsplash.com/photo-1599643478514-4a4e0f04c6b1?q=80&w=800&auto=format&fit=crop',
+  );
+  const pulserasImgs = findImages(
+    ['pulsera', 'brazalete', 'bracelet'],
+    'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop',
+  );
+  const joyerosImgs = findImages(
+    ['joyero', 'jewelry box', 'estuche'],
+    regaloProduct?.featuredImage?.url ||
+      'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=800&auto=format&fit=crop',
+  );
 
   return (
     <div className="relative flex flex-col pt-0 transition-colors duration-300">
@@ -66,28 +86,30 @@ export default async function Home() {
       <InfoScrollClient />
 
       {/* 3. Shop by Category (Responsive Grid / Deck of Cards GSAP) */}
-      <CategoryGridScrollClient categories={[
-        {
-          img: anillosImgs.img1,
-          tag: 'Anillos',
-          link: '/categoria/anillos',
-        },
-        {
-          img: aretesImgs.img1,
-          tag: 'Aretes',
-          link: '/categoria/aretes',
-        },
-        {
-          img: collaresImgs.img1,
-          tag: 'Collares',
-          link: '/categoria/collares',
-        },
-        {
-          img: pulserasImgs.img1,
-          tag: 'Pulseras',
-          link: '/categoria/brazaletes',
-        },
-      ]} />
+      <CategoryGridScrollClient
+        categories={[
+          {
+            img: anillosImgs.img1,
+            tag: 'Anillos',
+            link: '/categoria/anillos',
+          },
+          {
+            img: aretesImgs.img1,
+            tag: 'Aretes',
+            link: '/categoria/aretes',
+          },
+          {
+            img: collaresImgs.img1,
+            tag: 'Collares',
+            link: '/categoria/collares',
+          },
+          {
+            img: pulserasImgs.img1,
+            tag: 'Pulseras',
+            link: '/categoria/brazaletes',
+          },
+        ]}
+      />
 
       {/* 4. Best Sellers Carousel */}
       <section className="py-24 bg-white dark:bg-background-dark overflow-hidden">
@@ -111,7 +133,10 @@ export default async function Home() {
       <section className="featured_Products py-0 border-y border-primary/10">
         <div className="flex flex-col md:flex-row min-h-[600px]">
           {/* Left Column: Joyeros */}
-          <Link href="/categoria/joyeros" className="w-full md:w-1/2 relative group overflow-hidden h-96 md:h-[600px] block">
+          <Link
+            href="/categoria/joyeros"
+            className="w-full md:w-1/2 relative group overflow-hidden h-96 md:h-[600px] block"
+          >
             <Image
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-105"
