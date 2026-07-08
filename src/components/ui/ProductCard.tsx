@@ -31,8 +31,6 @@ export function ProductCard({
     product.images?.edges.map((e) => e.node.url) ||
     ([product.featuredImage?.url].filter(Boolean) as string[]);
 
-  console.log(images);
-
   const currentPrice = activeVariant?.price?.amount
     ? parseFloat(activeVariant.price.amount)
     : parseFloat(product.priceRange.minVariantPrice.amount);
