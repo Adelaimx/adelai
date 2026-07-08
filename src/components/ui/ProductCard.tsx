@@ -26,11 +26,12 @@ export function ProductCard({
   const variants = product.variants?.edges.map((e) => e.node) || [];
   const activeVariant = variants[activeVariantIndex];
 
-  // Extract images from variant or fallback to product images
-  const images = activeVariant?.image
-    ? [activeVariant.image.url]
-    : product.images?.edges.map((e) => e.node.url) ||
-      ([product.featuredImage?.url].filter(Boolean) as string[]);
+  // Use all product images in the exact order from Shopify
+  const images =
+    product.images?.edges.map((e) => e.node.url).reverse() ||
+    ([product.featuredImage?.url].filter(Boolean) as string[]);
+
+  console.log(images);
 
   const currentPrice = activeVariant?.price?.amount
     ? parseFloat(activeVariant.price.amount)
@@ -49,7 +50,18 @@ export function ProductCard({
   const handleVariantChange = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
     setActiveVariantIndex(idx);
-    setCurrentImageIndex(0); // Reset image index on color change
+
+    // Si la variante tiene una imagen, busca su índice en el arreglo general para mostrarla
+    const variantImgUrl = variants[idx]?.image?.url;
+    if (variantImgUrl) {
+      const imgIdx = images.indexOf(variantImgUrl);
+      if (imgIdx !== -1) {
+        setCurrentImageIndex(imgIdx);
+        return;
+      }
+    }
+
+    setCurrentImageIndex(0); // Si no encuentra la imagen de la variante, regresa a la principal
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
