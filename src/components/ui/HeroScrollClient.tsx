@@ -299,6 +299,9 @@ export function HeroScrollClient({
                   <p className="text-sm text-white/80">
                     Incluido en tu compra mayor a $1999
                   </p>
+                  <p className="text-[10px] text-white/60 mt-1 italic">
+                    * Color y tamaño sujetos a disponibilidad
+                  </p>
                 </div>
               </div>
             </div>

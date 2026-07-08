@@ -14,18 +14,28 @@ export default async function CategoryPage({
   // Title formatted (e.g., collares -> COLLARES)
   const categoryTitle = nombre.toUpperCase();
 
+  // Mapear cada categoría a su respectiva imagen local
+  const heroImages: Record<string, string> = {
+    anillos: '/encabezados/Anillos_Encabezado.jpeg',
+    brazaletes: '/encabezados/Brazaletes_Encabezado.jpeg',
+    aretes: '/encabezados/Encabezado_Aretes.png',
+    collares: '/encabezados/Encabezado_Collares.jpeg',
+  };
+
+  // Usar la imagen de la categoría o una imagen por defecto si la categoría no está en la lista
+  const defaultHero =
+    'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1920&auto=format&fit=crop';
+  const imageUrl = heroImages[nombre.toLowerCase()] || defaultHero;
+
   // Search Shopify products matching the category name
   const products = await getProducts({ query: nombre });
 
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">
       {/* Hero Section */}
-      <CategoryHero 
-        categoryTitle={categoryTitle} 
-        imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDwaqmawSFWorJ3TDv-aYqn-46jMniwqFOp6pROZgT-mqbFDfTU2-ltdHAMkmI3KE3uT8yViLyIA6PJMCJShK-3cKO-wu4hy53-VoZ1aii3e00jGk7iawSIHua8G3gGLDNP-lRoracrHM7QIP91nqE7t0mKzUsKN-XlDzDDkBQz8bTdtFA30YlGQPOedaauSfZKq9AgT4jkLcVNsBGObFdoU6dem6zjqTYNvsqDnF-CzIZZgVf5PS3oO_JJ1nzo7y0Vd_o4dgUUdCM"
-      />
+      <CategoryHero categoryTitle={categoryTitle} imageUrl={imageUrl} />
 
-      <div className="mx-auto flex flex-col lg:flex-row w-full max-w-7xl items-stretch gap-0 px-0 py-0">
+      <div className="mx-auto flex flex-col lg:flex-row w-full items-stretch gap-0 px-0 py-0">
         <ProductFilter products={products} />
         <ProductGrid products={products} />
       </div>

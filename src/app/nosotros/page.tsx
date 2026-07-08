@@ -3,7 +3,8 @@ import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollCl
 import { NosotrosContactForm } from '@/components/ui/NosotrosContactForm';
 
 export default function NosotrosPage() {
-  const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN || 'adelai-3.myshopify.com';
+  const shopifyDomain =
+    process.env.SHOPIFY_STORE_DOMAIN || 'adelai-3.myshopify.com';
 
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">
@@ -14,7 +15,7 @@ export default function NosotrosPage() {
             fill
             className="object-cover -z-10 mix-blend-overlay"
             alt="Editorial close up of high-end gold jewelry on a model"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5txGvV8rZI5ntRLvvsdDZW-3mcvsUVazLE44ZxGeXf9JbeM-Zvfb86u2WfPvfLesml4PHMAFXWEConNO6D34uChcyIbViAZ8cLNMQq77U2lG64xifqs1RhvuevuAFnU7Pgj9eADA-4gOlcRzJeeq7yMwJOtbPhp3NKJClHc1hWAD07hXpIrI_EC4sT0rlBvLbSq0jtTv3QgQ1Marybf7CzI78x7SCeqCuiuXksbD7rIQz2C-XPMrkSQbDJpf1ODcW92WyGjgO7mM"
+            src="/encabezados/Encabezado_Nostros.jpeg"
             priority
           />
         </div>
@@ -38,7 +39,7 @@ export default function NosotrosPage() {
                 fill
                 className="object-cover"
                 alt="Artisanal jeweler working on a delicate gold piece"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTbNgGqivhNwrXCmBCl1aY6P-Qp3aZ4Dw2EDsL2fzEIW7cBX6AvuwE_eBXy746EzmiWiu1ygypgLPv7eFPg_wNKmmEUeHVXxUtGiduZ_U8mSabLm6TyS8E-7-ws9Gwc_YBVMH6ztOb-NNPa1NgsUw8ymmcw1ZMMxdnsW_3xDc_IWP9UI6b_H4kx3gI0hEVGBnupRUPgnWtbPgnt1vPy5WmWbNdpdyc69tWvkasGl3rAZgMC7Ya2_PXPMYgxliTli0TpFypQfMrxiY"
+                src="/escencia.jpg"
               />
             </div>
             <div className="absolute -bottom-8 -right-8 w-64 h-80 hidden lg:block border border-[#b4afa7]/30 -z-10 translate-x-4 translate-y-4"></div>
@@ -58,10 +59,11 @@ export default function NosotrosPage() {
                 que elevan y en piezas que se sienten tan naturales como tú.
                 Cada diseño combina elegancia atemporal con estilo moderno y
                 minimalista, creando joyas versátiles que puedes usar desde lo
-                cotidiano hasta lo especial. Son piezas que no buscan llamar la
-                atención.... pero la atraen. Más que accesorios, son pequeños
-                recordatorios de lo especial que eres, incluso en los días más
-                simples. ADELAI - Everything Shine
+                cotidiano hasta lo especial. <br /> <br /> Son piezas que no
+                buscan llamar la atención.... pero la atraen. <br /> <br /> Más
+                que accesorios, son pequeños recordatorios de lo especial que
+                eres, incluso en los días más simples. <br /> <br /> ADELAI -
+                Everything Shine
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6">

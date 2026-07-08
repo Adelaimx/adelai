@@ -604,31 +604,53 @@ export function ProductDetailsClient({
           ) : (
             <div className="p-4 sm:p-8 rounded-xl bg-white border border-primary/10 text-sm text-primary/80 leading-relaxed text-center sm:text-left">
               <div className="cuidados">
-                Nuestras piezas están diseñadas para acompañarte todos los días.
-                Con los cuidados adecuados, conservarán su brillo y belleza por
-                mucho más tiempo. <span>Acero inoxidable</span> Es resistente al
-                agua y al uso diario, puedes usarlo con tranquilidad, pero te
-                recomendamos secarlo después del contacto con agua para mantener
-                su acabado impecable.{' '}
-                <span>Acero inoxidable chapado en oro o platino</span> Para
-                preservar el baño de oro o platino, evita contacto constante con
-                cremas, perfumes y otros químicos, retira tus piezas antes de
-                bañarte, nadar o hacer ejercicio, guárdalas por separado para
-                evitar fricción. <span>Zirconia Cúbica</span> Mantiene su brillo
-                con facilidad, pero evita golpes o contacto con superficies
-                duras, puedes limpiar tu joyería suavemente con un paño seco
-                para conservar su luz. <span>Perlas naturales</span> Evita el
-                contacto con perfumes y productos químicos, limpialas con un
-                paño suave y guárdalas en un lugar seco, separadas de otras
-                piezas.
+                <p className="mb-4">
+                  Nuestras piezas están diseñadas para acompañarte todos los
+                  días. Con los cuidados adecuados, conservarán su brillo y
+                  belleza por mucho más tiempo.
+                </p>
+                <ul className="list-disc pl-5 space-y-3 text-left">
+                  <li>
+                    <span className="font-semibold">Acero inoxidable:</span> Es
+                    resistente al agua y al uso diario, puedes usarlo con
+                    tranquilidad, pero te recomendamos secarlo después del
+                    contacto con agua para mantener su acabado impecable.
+                  </li>
+                  <li>
+                    <span className="font-semibold">
+                      Acero inoxidable chapado en oro o platino:
+                    </span>{' '}
+                    Para preservar el baño de oro o platino, evita contacto
+                    constante con cremas, perfumes y otros químicos, retira tus
+                    piezas antes de bañarte, nadar o hacer ejercicio, guárdalas
+                    por separado para evitar fricción.
+                  </li>
+                  <li>
+                    <span className="font-semibold">Zirconia Cúbica:</span>{' '}
+                    Mantiene su brillo con facilidad, pero evita golpes o
+                    contacto con superficies duras, puedes limpiar tu joyería
+                    suavemente con un paño seco para conservar su luz.
+                  </li>
+                  <li>
+                    <span className="font-semibold">Perlas naturales:</span>{' '}
+                    Evita el contacto con perfumes y productos químicos,
+                    limpialas con un paño suave y guárdalas en un lugar seco,
+                    separadas de otras piezas.
+                  </li>
+                </ul>
               </div>
-              <div className="recomendaciones mt-4">
-                <span>Recomendaciones generales:</span> Evita el contacto
-                directo con perfumes, cremas y productos químicos. Guarda tus
-                piezas en un lugar seco, idealmente en su guardapolvo. Limpialas
-                suavemente con un paño seco después de usarlas. Retíralas antes
-                de dormir o hacer ejercicio. Cuidar tus piezas es también una
-                forma de cuidar lo que representan. Adelai - Everthing shine
+              <div className="recomendaciones mt-6">
+                <p className="font-semibold mb-3 text-left">Recomendaciones generales:</p>
+                <ul className="list-disc pl-5 space-y-2 text-left">
+                  <li>Evita el contacto directo con perfumes, cremas y productos químicos.</li>
+                  <li>Guarda tus piezas en un lugar seco, idealmente en su guardapolvo.</li>
+                  <li>Limpialas suavemente con un paño seco después de usarlas.</li>
+                  <li>Retíralas antes de dormir o hacer ejercicio.</li>
+                  <li>Cuidar tus piezas es también una forma de cuidar lo que representan.</li>
+                </ul>
+                <p className="mt-6 text-center italic text-primary/70">
+                  Adelai - Everything shine
+                </p>
               </div>
             </div>
           )}
