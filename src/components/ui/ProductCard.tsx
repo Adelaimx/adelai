@@ -28,7 +28,7 @@ export function ProductCard({
 
   // Use all product images in the exact order from Shopify
   const images =
-    product.images?.edges.map((e) => e.node.url).reverse() ||
+    product.images?.edges.map((e) => e.node.url) ||
     ([product.featuredImage?.url].filter(Boolean) as string[]);
 
   console.log(images);
