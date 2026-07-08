@@ -17,7 +17,8 @@ const navLinks = [
   { href: '/categoria/collares', label: 'Collares', number: '04' },
   { href: '/categoria/brazaletes', label: 'Brazaletes', number: '05' },
   { href: '/categoria/anillos', label: 'Anillos', number: '06' },
-  { href: '/best-sellers', label: 'Best Sellers', number: '07' },
+  { href: '/categoria/joyeros', label: 'Joyeros', number: '07' },
+  { href: '/best-sellers', label: 'Best Sellers', number: '08' },
 ];
 
 export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {

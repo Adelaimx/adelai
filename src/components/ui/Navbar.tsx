@@ -71,6 +71,7 @@ export function Navbar({ shopifyDomain = 'adelai-3.myshopify.com' }: NavbarProps
           <nav className="hidden lg:flex items-center gap-6">
             <Link className={getLinkClasses("/categoria/brazaletes")} href="/categoria/brazaletes">brazaletes</Link>
             <Link className={getLinkClasses("/categoria/anillos")} href="/categoria/anillos">anillos</Link>
+            <Link className={getLinkClasses("/categoria/joyeros")} href="/categoria/joyeros">joyeros</Link>
             <Link className={getLinkClasses("/best-sellers", true)} href="/best-sellers">BEST SELLERS</Link>
           </nav>
           

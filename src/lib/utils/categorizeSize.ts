@@ -1,6 +1,6 @@
 import { Product } from '../shopify/types';
 
-export type ProductCategory = 'ARETES' | 'COLLARES' | 'BRAZALETES' | 'ANILLOS' | 'OTROS';
+export type ProductCategory = 'ARETES' | 'COLLARES' | 'BRAZALETES' | 'ANILLOS' | 'JOYEROS' | 'OTROS';
 
 export function getProductCategory(product: Product): ProductCategory {
   const t = (product.productType || product.title + ' ' + (product.tags?.join(' ') || '')).toLowerCase();
@@ -9,6 +9,7 @@ export function getProductCategory(product: Product): ProductCategory {
   if (t.includes('collar') || t.includes('necklace') || t.includes('cadena') || t.includes('choker')) return 'COLLARES';
   if (t.includes('brazalete') || t.includes('pulsera') || t.includes('bracelet')) return 'BRAZALETES';
   if (t.includes('anillo') || t.includes('ring')) return 'ANILLOS';
+  if (t.includes('joyero') || t.includes('jewelry box')) return 'JOYEROS';
   
   return 'OTROS';
 }

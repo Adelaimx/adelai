@@ -53,6 +53,12 @@ export function ProductDetailsClient({
             hex = '#C0C0C0';
           } else if (id === 'rose gold' || id === 'oro rosa') {
             hex = '#B76E79';
+          } else if (id === 'rosa') {
+            hex = '#FFB6C1';
+          } else if (id === 'cafe' || id === 'café') {
+            hex = '#8B5A2B';
+          } else if (id === 'verde') {
+            hex = '#092c0aff';
           }
 
           options.set(id, hex);
@@ -640,13 +646,26 @@ export function ProductDetailsClient({
                 </ul>
               </div>
               <div className="recomendaciones mt-6">
-                <p className="font-semibold mb-3 text-left">Recomendaciones generales:</p>
+                <p className="font-semibold mb-3 text-left">
+                  Recomendaciones generales:
+                </p>
                 <ul className="list-disc pl-5 space-y-2 text-left">
-                  <li>Evita el contacto directo con perfumes, cremas y productos químicos.</li>
-                  <li>Guarda tus piezas en un lugar seco, idealmente en su guardapolvo.</li>
-                  <li>Limpialas suavemente con un paño seco después de usarlas.</li>
+                  <li>
+                    Evita el contacto directo con perfumes, cremas y productos
+                    químicos.
+                  </li>
+                  <li>
+                    Guarda tus piezas en un lugar seco, idealmente en su
+                    guardapolvo.
+                  </li>
+                  <li>
+                    Limpialas suavemente con un paño seco después de usarlas.
+                  </li>
                   <li>Retíralas antes de dormir o hacer ejercicio.</li>
-                  <li>Cuidar tus piezas es también una forma de cuidar lo que representan.</li>
+                  <li>
+                    Cuidar tus piezas es también una forma de cuidar lo que
+                    representan.
+                  </li>
                 </ul>
                 <p className="mt-6 text-center italic text-primary/70">
                   Adelai - Everything shine

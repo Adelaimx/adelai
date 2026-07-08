@@ -20,6 +20,7 @@ export default async function CategoryPage({
     brazaletes: '/encabezados/Brazaletes_Encabezado.jpeg',
     aretes: '/encabezados/Encabezado_Aretes.png',
     collares: '/encabezados/Encabezado_Collares.jpeg',
+    joyeros: '/encabezados/Encabezado_Joyeros.jpeg',
   };
 
   // Usar la imagen de la categoría o una imagen por defecto si la categoría no está en la lista
@@ -27,8 +28,12 @@ export default async function CategoryPage({
     'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=1920&auto=format&fit=crop';
   const imageUrl = heroImages[nombre.toLowerCase()] || defaultHero;
 
-  // Search Shopify products matching the category name
-  const products = await getProducts({ query: nombre });
+  // Search Shopify products matching the category name (or all if catalog)
+  let queryToUse = nombre;
+  if (nombre.toLowerCase() === 'joyeros') {
+    queryToUse = 'joyero'; // Buscar en singular para mejor coincidencia en Shopify
+  }
+  const products = await getProducts({ query: queryToUse });
 
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">

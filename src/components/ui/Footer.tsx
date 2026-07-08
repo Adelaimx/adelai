@@ -145,6 +145,14 @@ export function Footer() {
                 Brazaletes
               </Link>
             </li>
+            <li>
+              <Link
+                className="hover:text-gold transition-colors block"
+                href="/categoria/joyeros"
+              >
+                Joyeros
+              </Link>
+            </li>
           </ul>
         </div>
 
