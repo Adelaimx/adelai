@@ -2,21 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { revalidateTag } from 'next/cache';
 
-export async function GET(req: NextRequest) {
-  const secret = process.env.WEBHOOK_SECRET;
-  const url = new URL(req.url);
-  const querySecret = url.searchParams.get('secret');
-
-  if (querySecret !== secret) {
-    return NextResponse.json({ error: 'Unauthorized manual revalidation' }, { status: 401 });
-  }
-
-  const tag = url.searchParams.get('tag') || 'products';
-  revalidateTag(tag, 'max');
-  
-  return NextResponse.json({ success: true, message: `Revalidated tag: ${tag}` });
-}
-
 export async function POST(req: NextRequest) {
   try {
     // Get the raw body as text for HMAC validation
