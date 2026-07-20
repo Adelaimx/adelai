@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CategoryHero } from '@/components/ui/CategoryHero';
 import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollClient';
 import { NosotrosContactForm } from '@/components/ui/NosotrosContactForm';
+import { HashScroller } from '@/components/ui/HashScroller';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -105,6 +106,8 @@ export default function NosotrosPage() {
           <NosotrosContactForm />
         </div>
       </section>
+      
+      <HashScroller />
     </div>
   );
 }
