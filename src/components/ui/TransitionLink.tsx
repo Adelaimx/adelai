@@ -46,6 +46,9 @@ export function TransitionLink({ children, href, onClick, ...props }: Transition
       });
     }
 
+    // Force scroll to top while the curtain is covering the screen
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
     // Push the new route. 
     // The new route will trigger template.tsx which handles the Enter animation.
     router.push(href);

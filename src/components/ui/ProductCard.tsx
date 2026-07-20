@@ -11,6 +11,7 @@ interface ProductCardProps {
   priority?: boolean;
   forceAddMode?: string;
   layout?: 'carousel' | 'grid';
+  hideArrowsOnMobile?: boolean;
 }
 
 export function ProductCard({
@@ -18,6 +19,7 @@ export function ProductCard({
   priority = false,
   forceAddMode = 'Añadir al Carrito',
   layout = 'grid',
+  hideArrowsOnMobile = false,
 }: ProductCardProps) {
   const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -101,7 +103,7 @@ export function ProductCard({
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+              className={`absolute left-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 transition-opacity z-10 cursor-pointer ${hideArrowsOnMobile ? 'hidden md:block md:opacity-0 group-hover:opacity-100' : 'opacity-100 lg:opacity-0 group-hover:opacity-100'}`}
               aria-label="Imagen anterior"
             >
               <span className="material-symbols-outlined text-sm">
@@ -110,7 +112,7 @@ export function ProductCard({
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+              className={`absolute right-2 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white text-slate-900 rounded-full p-1 transition-opacity z-10 cursor-pointer ${hideArrowsOnMobile ? 'hidden md:block md:opacity-0 group-hover:opacity-100' : 'opacity-100 lg:opacity-0 group-hover:opacity-100'}`}
               aria-label="Siguiente imagen"
             >
               <span className="material-symbols-outlined text-sm">

@@ -83,6 +83,7 @@ export default async function Home() {
 
   return (
     <div className="relative flex flex-col pt-0 transition-colors duration-300">
+      <link rel="preload" as="image" href="/Fotos_destacadas/3_.avif" fetchPriority="high" />
       {/* 1. Hero Section */}
       <HeroScrollClient
         regaloProduct={regaloProduct}
@@ -151,9 +152,9 @@ export default async function Home() {
               alt="Joyeros elegantes ADELAI"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/25 group-hover:bg-black/50 transition-colors flex items-center justify-center">
               <div className="text-center px-6">
-                <h2 className="font-serif text-4xl md:text-5xl text-white tracking-wider mb-6 drop-shadow-md">
+                <h2 className="font-serif text-4xl md:text-5xl text-white tracking-wider mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
                   JOYEROS
                 </h2>
               </div>
@@ -197,9 +198,9 @@ export default async function Home() {
                     alt={`Categoría ${item.tag} - Joyería ADELAI`}
                     sizes="(max-width: 768px) 50vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/25 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                     <div className="flex flex-col items-center gap-4 select-none">
-                      <span className="text-white uppercase tracking-[0.4em] font-medium text-[10px] md:text-sm lg:text-lg drop-shadow-md">
+                      <span className="text-white uppercase tracking-[0.4em] font-medium text-[10px] md:text-sm lg:text-lg drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                         {item.tag}
                       </span>
                     </div>

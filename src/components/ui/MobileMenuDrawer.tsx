@@ -118,24 +118,24 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
       
       {/* Click-outside overlay at the bottom (the 10% space) */}
       <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm" 
+        className="absolute inset-0 bg-black/40 transition-opacity" 
         onClick={onClose} 
       />
 
       {/* Multilayer Backgrounds (90% height) */}
       <div 
         ref={layer1Ref} 
-        className="absolute top-0 left-0 w-full h-[90vh] bg-secondary shadow-2xl rounded-b-3xl"
+        className="absolute top-0 left-0 w-full h-[90vh] bg-secondary shadow-xl rounded-b-3xl will-change-transform"
       />
       <div 
         ref={layer2Ref} 
-        className="absolute top-0 left-0 w-full h-[90vh] bg-primary shadow-2xl rounded-b-3xl"
+        className="absolute top-0 left-0 w-full h-[90vh] bg-primary shadow-xl rounded-b-3xl will-change-transform"
       />
       
       {/* Main Menu Drawer Layer */}
       <div 
         ref={menuLayerRef}
-        className="absolute top-0 left-0 w-full h-[90vh] bg-background-light shadow-2xl rounded-b-3xl flex flex-col"
+        className="absolute top-0 left-0 w-full h-[90vh] bg-background-light shadow-xl rounded-b-3xl flex flex-col will-change-transform"
         onTouchStart={(e) => handleDragStart(e.touches[0].clientY)}
         onTouchMove={(e) => handleDragMove(e.touches[0].clientY)}
         onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientY)}

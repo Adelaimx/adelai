@@ -26,7 +26,7 @@ export function InfoScrollClient() {
         trigger: containerRef.current,
         start: "top 90%", // When top of container hits 90% of viewport
         end: "top 40%",   // When top of container hits 40% of viewport (settled in original position)
-        scrub: true,
+        scrub: 1.5,
       }
     });
 

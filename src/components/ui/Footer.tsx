@@ -6,9 +6,11 @@ export function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
         <div className="col-span-1 md:col-span-1 flex flex-col h-full">
           <div>
-            <h2 className="font-serif text-3xl tracking-[0.2em] font-light mb-8 text-gold">
-              ADELAI
-            </h2>
+            <Link href="/">
+              <h2 className="font-serif text-3xl tracking-[0.2em] font-light mb-8 text-gold hover:text-white transition-colors cursor-pointer inline-block">
+                ADELAI
+              </h2>
+            </Link>
             <p className="text-xs text-accent/60 leading-loose uppercase tracking-widest max-w-sm">
               Joyería atemporal para la mujer moderna. Diseñada en España, amada
               en todo el mundo.
@@ -172,7 +174,7 @@ export function Footer() {
             <li>
               <Link
                 className="hover:text-gold transition-colors block"
-                href="/nosotros"
+                href="/nosotros#contacto"
               >
                 Contacto
               </Link>
