@@ -21,6 +21,7 @@ const carmela = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.adelai.com.mx"),
   title: "ADELAI | Joyería Minimalista y Consciente",
   description: "Joyería atemporal para la mujer moderna. Diseñada en España, amada en todo el mundo. Descubre nuestra colección de collares, anillos y aretes en oro de 18k.",
   keywords: ["joyería", "minimalista", "consciente", "españa", "oro 18k", "acero inoxidable", "atemporal"],
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
   robots: "index, follow",
   openGraph: {
     type: "website",
-    locale: "es_ES",
-    url: "https://adelai.es",
+    locale: "es_MX",
+    url: "https://www.adelai.com.mx",
     title: "ADELAI | Joyería Minimalista y Consciente",
     description: "Joyería atemporal para la mujer moderna. Diseñada en España.",
     siteName: "ADELAI Jewelry",

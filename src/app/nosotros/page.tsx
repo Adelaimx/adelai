@@ -1,6 +1,15 @@
 import Image from 'next/image';
 import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollClient';
 import { NosotrosContactForm } from '@/components/ui/NosotrosContactForm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Nosotros | ADELAI',
+  description: 'Conoce la historia detrás de ADELAI. Joyería minimalista, consciente y atemporal para la mujer moderna.',
+  alternates: {
+    canonical: '/nosotros',
+  },
+};
 
 export default function NosotrosPage() {
   const shopifyDomain =

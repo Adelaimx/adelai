@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { getCollections } from '../lib/shopify/queries/collection';
 import { BestSellersCarousel } from '@/components/ui/BestSellersCarousel';
 import { ShopTheLookClient } from '@/components/ui/ShopTheLookClient';
@@ -9,6 +10,12 @@ import { InfoScrollClient } from '@/components/ui/InfoScrollClient';
 import { CategoryGridScrollClient } from '@/components/ui/CategoryGridScrollClient';
 import { getInstagramPosts } from '@/lib/instagram';
 import { InstagramCarousel } from '@/components/ui/InstagramCarousel';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default async function Home() {
   const allProducts = await getProducts();

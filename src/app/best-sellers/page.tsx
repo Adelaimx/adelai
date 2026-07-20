@@ -3,6 +3,15 @@ import { ProductGrid } from "@/components/ui/ProductGrid";
 import { getProducts } from "@/lib/shopify/queries/product";
 import { getCollections } from "@/lib/shopify/queries/collection";
 import { ExcellenceSection } from "@/components/ui/ExcellenceSection";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Best Sellers | ADELAI',
+  description: 'Descubre las piezas más amadas de ADELAI. Joyería minimalista y consciente que resalta tu belleza.',
+  alternates: {
+    canonical: '/best-sellers',
+  },
+};
 
 export default async function BestSellersPage() {
   // Fetch real data from Shopify
