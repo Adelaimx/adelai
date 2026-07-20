@@ -1,6 +1,17 @@
 import Image from 'next/image';
+import { CategoryHero } from '@/components/ui/CategoryHero';
 import { NosotrosStoryScrollClient } from '@/components/ui/NosotrosStoryScrollClient';
 import { NosotrosContactForm } from '@/components/ui/NosotrosContactForm';
+import { HashScroller } from '@/components/ui/HashScroller';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Nosotros | ADELAI',
+  description: 'Conoce la historia detrás de ADELAI. Joyería minimalista, consciente y atemporal para la mujer moderna.',
+  alternates: {
+    canonical: '/nosotros',
+  },
+};
 
 export default function NosotrosPage() {
   const shopifyDomain =
@@ -9,23 +20,10 @@ export default function NosotrosPage() {
   return (
     <div className="relative flex min-h-screen flex-col -mt-20">
       {/* Hero Section */}
-      <section className="relative h-screen w-full flex flex-col items-center justify-end pb-24 overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-black/20">
-          <Image
-            fill
-            className="object-cover -z-10 mix-blend-overlay"
-            alt="Editorial close up of high-end gold jewelry on a model"
-            src="/encabezados/Encabezado_Nostros.jpeg"
-            priority
-          />
-        </div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h2 className="font-serif text-5xl md:text-7xl font-light tracking-[0.2em] uppercase dark:text-white">
-            Nuestra Historia
-          </h2>
-          <div className="w-16 h-[1px] bg-white mx-auto mt-8"></div>
-        </div>
-      </section>
+      <CategoryHero 
+        categoryTitle="Nuestra Historia" 
+        imageUrl="/encabezados/Encabezado_Nostros.jpeg" 
+      />
 
       {/* Star Wars Text Scroll Animation */}
       <NosotrosStoryScrollClient />
@@ -95,7 +93,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="bg-primary/5 py-32 px-6 border-t border-primary/10">
+      <section id="contacto" className="bg-primary/5 py-32 px-6 border-t border-primary/10">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="font-serif text-4xl text-slate-900 dark:text-primary mb-4">
             Escríbenos
@@ -108,6 +106,8 @@ export default function NosotrosPage() {
           <NosotrosContactForm />
         </div>
       </section>
+      
+      <HashScroller />
     </div>
   );
 }

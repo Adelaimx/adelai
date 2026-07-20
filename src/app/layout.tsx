@@ -21,6 +21,7 @@ const carmela = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.adelai.com.mx"),
   title: "ADELAI | Joyería Minimalista y Consciente",
   description: "Joyería atemporal para la mujer moderna. Diseñada en España, amada en todo el mundo. Descubre nuestra colección de collares, anillos y aretes en oro de 18k.",
   keywords: ["joyería", "minimalista", "consciente", "españa", "oro 18k", "acero inoxidable", "atemporal"],
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
   robots: "index, follow",
   openGraph: {
     type: "website",
-    locale: "es_ES",
-    url: "https://adelai.es",
+    locale: "es_MX",
+    url: "https://www.adelai.com.mx",
     title: "ADELAI | Joyería Minimalista y Consciente",
     description: "Joyería atemporal para la mujer moderna. Diseñada en España.",
     siteName: "ADELAI Jewelry",
@@ -59,7 +60,18 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" media="print" />
+        <noscript>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+        </noscript>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            document.querySelectorAll('link[media="print"]').forEach(function(link) {
+              link.media = 'all';
+            });
+          `
+        }} />
       </head>
       <body className="antialiased flex flex-col min-h-screen">
         <InitialLoader />

@@ -51,6 +51,7 @@ export function BestSellersCarousel({ products }: BestSellersCarouselProps) {
               product={product} 
               forceAddMode="AÑADIR AL CARRITO" 
               layout="grid" // Use grid layout since we handle the width here
+              hideArrowsOnMobile={true}
             />
           </div>
         ))}

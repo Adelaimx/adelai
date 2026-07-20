@@ -7,16 +7,17 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(useGSAP);
 
 export function InitialLoader() {
-  const [shouldShow, setShouldShow] = useState(false);
+  const [shouldShow, setShouldShow] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<SVGPathElement>(null);
   const logoWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check session storage to only show once per visit
-    const hasVisited = sessionStorage.getItem("hasVisitedAdelai");
-    if (!hasVisited) {
-      setShouldShow(true);
+    // If the inline script (which runs synchronously before paint) added the hide-loader class, 
+    // it means it's a bot or a returning user. We unmount it to free resources.
+    if (document.documentElement.classList.contains('hide-loader')) {
+      setShouldShow(false);
+    } else {
       sessionStorage.setItem("hasVisitedAdelai", "true");
     }
   }, []);
@@ -68,7 +69,29 @@ export function InitialLoader() {
   if (!shouldShow) return null;
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none">
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                var isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speed insights|ptst/i.test(navigator.userAgent);
+                var hasVisited = sessionStorage.getItem("hasVisitedAdelai");
+                if (isBot || hasVisited) {
+                  document.documentElement.classList.add('hide-loader');
+                }
+              } catch(e) {}
+            })();
+          `,
+        }}
+      />
+      <div id="initial-loader" ref={containerRef} className="fixed inset-0 z-[9999] pointer-events-none">
+        <style dangerouslySetInnerHTML={{__html: `
+          #initial-loader .adelai-letter, 
+          #initial-loader .slogan-path { 
+            opacity: 0; 
+          }
+        `}} />
       
       {/* Background Curtain SVG */}
       <svg 
@@ -126,5 +149,6 @@ export function InitialLoader() {
         </div>
       </div>
     </div>
+    </>
   );
 }

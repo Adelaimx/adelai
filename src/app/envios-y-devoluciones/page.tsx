@@ -3,6 +3,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Envíos y Devoluciones | ADELAI',
   description: 'Conoce nuestras políticas de envíos y devoluciones en ADELAI Joyería.',
+  alternates: {
+    canonical: '/envios-y-devoluciones',
+  },
 };
 
 export default function EnviosDevolucionesPage() {

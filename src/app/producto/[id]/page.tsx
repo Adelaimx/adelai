@@ -12,9 +12,27 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         return { title: "Producto No Encontrado | ADELAI" };
     }
     
+    const url = `/producto/${id}`;
+    
     return {
         title: `${product.title} | ADELAI`,
         description: product.seo?.description || product.description,
+        alternates: {
+            canonical: url,
+        },
+        openGraph: {
+            title: `${product.title} | ADELAI`,
+            description: product.seo?.description || product.description,
+            url: url,
+            images: product.featuredImage ? [
+                {
+                    url: product.featuredImage.url,
+                    width: product.featuredImage.width,
+                    height: product.featuredImage.height,
+                    alt: product.featuredImage.altText || product.title,
+                }
+            ] : [],
+        },
     };
 }
 
@@ -63,5 +81,27 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
     }
   }
 
-  return <ProductDetailsClient product={product} relatedProducts={relatedProducts} />;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.description,
+    image: product.featuredImage?.url,
+    offers: {
+      '@type': 'Offer',
+      availability: product.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      price: product.priceRange?.minVariantPrice?.amount,
+      priceCurrency: product.priceRange?.minVariantPrice?.currencyCode,
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductDetailsClient product={product} relatedProducts={relatedProducts} />
+    </>
+  );
 }

@@ -10,6 +10,9 @@ export function PageTransitionCurtain() {
   const searchParams = useSearchParams();
 
   useGSAP(() => {
+    // Force scroll to top on any route change to fix the bug where pages load scrolled down
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
     const curtain = document.getElementById("page-transition-curtain");
     if (curtain && curtain.getAttribute("data-animating") === "true") {
       gsap.to(curtain, {

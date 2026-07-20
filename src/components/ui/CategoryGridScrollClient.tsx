@@ -61,7 +61,7 @@ export function CategoryGridScrollClient({ categories = DEFAULT_CATEGORIES }: Ca
         trigger: containerRef.current,
         start: "top top",
         end: "+=300%", // Pin for 3 screen heights to allow sequential scrolling
-        scrub: true,
+        scrub: 1.5,
         pin: true,
       }
     });
@@ -84,13 +84,13 @@ export function CategoryGridScrollClient({ categories = DEFAULT_CATEGORIES }: Ca
         src={item.img}
         alt={item.tag}
       />
-      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <span className="text-white uppercase tracking-[0.4em] font-medium text-lg drop-shadow-md select-none">
+      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4 w-full">
+          <span className="text-white uppercase tracking-[0.4em] font-medium text-lg drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] select-none">
             {item.tag}
           </span>
           <Link href={item.link} className="cursor-pointer pointer-events-auto">
-            <span className="backdrop-blur-md border border-white/50 bg-transparent text-white text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded-custom transition-all duration-300 font-semibold hover:border-primary hover:bg-primary/20">
+            <span className="backdrop-blur-md border border-white/50 bg-black/10 text-white text-[10px] uppercase tracking-[0.2em] px-4 py-2 rounded-custom transition-all duration-300 font-semibold hover:border-primary hover:bg-primary/20 shadow-lg">
               VER COLECCIÓN
             </span>
           </Link>

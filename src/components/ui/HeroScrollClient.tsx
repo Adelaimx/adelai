@@ -66,7 +66,7 @@ export function HeroScrollClient({
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
+        scrub: 1.5,
       },
     });
   });
@@ -103,9 +103,10 @@ export function HeroScrollClient({
                   key={`left-${slideIndex}`}
                   className="absolute inset-0 transition-transform"
                   style={{
-                    transform: `translateY(${offset * 100}%)`,
+                    transform: `translate3d(0, ${offset * 100}%, 0)`,
                     transitionDuration: '1.2s',
                     transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+                    willChange: 'transform',
                   }}
                 >
                   <Image
@@ -134,9 +135,10 @@ export function HeroScrollClient({
                   key={`right-${slideIndex}`}
                   className="absolute inset-0 transition-transform"
                   style={{
-                    transform: `translateY(${-offset * 100}%)`,
+                    transform: `translate3d(0, ${-offset * 100}%, 0)`,
                     transitionDuration: '1.2s',
                     transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+                    willChange: 'transform',
                   }}
                 >
                   <Image

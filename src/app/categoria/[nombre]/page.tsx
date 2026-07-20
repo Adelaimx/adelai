@@ -4,6 +4,25 @@ import { getProducts } from '@/lib/shopify/queries/product';
 import { ExcellenceSection } from '@/components/ui/ExcellenceSection';
 import { CategoryHero } from '@/components/ui/CategoryHero';
 
+export async function generateMetadata({ params }: { params: Promise<{ nombre: string }> }) {
+  const { nombre } = await params;
+  
+  // Format title (e.g. collares -> Collares)
+  const formattedName = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+  const url = `/categoria/${nombre}`;
+  
+  return {
+    title: `${formattedName} | ADELAI`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${formattedName} | ADELAI`,
+      url: url,
+    },
+  };
+}
+
 export default async function CategoryPage({
   params,
 }: {
